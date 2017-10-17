@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+      .conta{
+          margin: 40px;
+      }
+        .choose{
+            margin: 40px 0;
+        }
+      .conta #ins select{
+          margin-right: 20px;
+          font-size: 20px;
+      }
+        #outs{
+            display : none;
+
+        }
+    </style>
+</head>
+<body>
+<div class="conta">
+    <div class="choose">
+    <input type="radio" id="instudents" name="student" checked="checked">
+    <label for="instudents">在校生</label>
+    <input type="radio" id="outstudents" name="student">
+    <label for="outstudents">非在校生</label>
+    </div>
+    <div id="ins">
+        <select name="province" id="province">
+            <option >北京</option>
+            <option >上海</option>
+            <option >山西</option>
+        </select>
+        <select name="school" id="school">
+            <option value="">清华大学</option>
+            <option value="">北京大学</option>
+            <option value="">人民大学</option>
+        </select>
+
+    </div>
+    <div id="outs">
+        <label for="text">就业单位</label>
+        <input type="text" id="text">
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+    window.onload = function(){
+        var inputs = document.getElementsByTagName("input");
+        var selects = document.getElementsByTagName("select");
+        var div = document.getElementsByTagName("div");
+
+        inputs[0].onchange = function(){
+          div[2].style.display = "block";
+          div[3].style.display = "none";
+        }
+        inputs[1].onchange = function(){
+            div[3].style.display = "block";
+            div[2].style.display = "none";
+        }
+        selects[0].onchange = function () {
+            alert(selects[0].value);
+            changeSchool(selects[0].value);
+        }
+        function changeSchool (select ) {
+            selects[1].options.length = 0;
+            switch (select){
+                case "北京":
+                    selects[1].add(new Option("北京大学"));
+                    selects[1].add(new Option("清华大学"));
+                    selects[1].add(new Option("北京邮电大学"));
+                    break;
+                case "山西":
+                    selects[1].add(new Option("山西大学"));
+                    selects[1].add(new Option("农业大学"));
+                    selects[1].add(new Option("太原理工大学"));
+                    break;
+                case "上海":
+                    selects[1].add(new Option("上海大学"));
+                    selects[1].add(new Option("复旦大学"));
+                    selects[1].add(new Option("同济大学"));
+                    break;
+            }
+
+            alert(selects[1].options.length);
+
+}
+
+    }
+
+</script>

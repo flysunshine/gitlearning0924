@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        p{
+            color: red;
+        }
+        .red{
+            colo:red;
+        }
+        .blue{
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+<div class="double">
+<input type="text" id="text">
+<input type="button" value="验证" id="btn">
+<p id="result"></p>
+</div>
+<div class="phoneNumber">
+    <input type="text" id="number">
+    <input type="button" value="验证" id="btn2">
+    <p id="phoneResult"></p>
+</div>
+
+<audio controls>
+    <source src="horse.ogg" >
+    <source src="horse.mp3" >
+    您的浏览器不支持 audio 元素。
+</audio>
+</body>
+</html>
+<script type="text/javascript">
+    window.onload = function(){
+//        var text = document.getElementById("text");
+//        var str = document.getElementById("text").value;
+//        var  btn = document.getElementById("btn");
+//        text.onchange = function () {
+//            alert("ss");
+//        }
+        var  btn = document.getElementById("btn");
+//        var double_words = /(([A-Za-z]+)\s+)\1/gi;
+        btn.onclick = function() {
+            var str = document.getElementById("text").value;
+
+            var results = document.getElementById("result");
+           // alert(str);
+            var double_words = /(\s|^)([A-Za-z\u00C0-\u1FFF\u2800-\uFFFD]+(-[A-Za-z\u00C0-\u1FFF\u2800-\uFFFD]+)*)\s+\2(\s|$)/g;
+//            var double_words =  /(\s|^)([A-Za-z\u00C0-\u1FFF\u2800-\uFFFD]+)\s+\2/g;
+            var result = double_words.exec(str);
+            if(result){
+//                alert(true);
+//                alert(result.index);
+                results.innerText = result[0];
+                results.classList.add("blue") ;
+                results.classList.remove("red");
+//                alert(results.className);
+            }
+            else{
+//                alert(false);
+                results.classList.remove("blue");
+                results.innerText = "没有相邻的单词是相同的";
+                results.classList.add("red");
+            }
+
+        }
+    }
+    var btn2 = document.getElementById("btn2");
+    var phoneResult = document.getElementById("phoneResult");
+    btn2.onclick = function () {
+        var number = document.getElementById("number").value;
+//        var number2 = parseInt(document.getElementById("number").value);
+//    alert( number +"dd"+number2);
+       var regexp2 = /1\d{10}/g;
+       if(isNaN(number)){
+//           alert(number);
+//           var result = regexp2.exec(number.toString());
+//           if(result){
+//               alert(result);
+//           }
+           phoneResult.innerText = "请输入数字";
+           phoneResult.classList.toggle("red");
+           phoneResult.classList.toggle("blue");
+
+
+       }
+       else{
+         var result =   regexp2.exec(number);
+         if(result){
+             phoneResult.innerText = "验证通过";
+         }
+         else{
+             phoneResult.innerText = "验证失败";
+         }
+
+           phoneResult.classList.toggle("blue");
+           phoneResult.classList.toggle("red");
+
+       }
+
+    }
+
+</script>

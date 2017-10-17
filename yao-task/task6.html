@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        table{
+            border-collapse: collapse;
+            margin: 40px auto;
+            width: 500px;
+            position: relative;
+        }
+        table thead{
+            background-color: grey;
+            color: white;
+            font-size: 12px;
+        }
+        table td{
+            border: 1px solid lightgray;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+        }
+        /*.title{*/
+            /*position: relative;*/
+        /*}*/
+        .up{
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-width: 0 0 2px 2px;
+            border-left:5px solid transparent;
+            border-right:5px solid transparent;
+            border-bottom:5px solid #fff;
+            position: relative;
+            top: -5px;
+            /*left: 70%;*/
+            cursor: pointer;
+        }
+        .down{
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-width: 0 0 2px 2px;
+            border-left:5px solid transparent;
+            border-right:5px solid transparent;
+            border-bottom:5px solid #fff;
+            transform:rotate(180deg);
+            position: relative;
+            top: 4px;
+            left: -10px;
+            cursor: pointer;
+
+        }
+        .myMenu{
+            position: absolute;
+            visibility: hidden;
+            top:0;
+            left:0;
+
+        }
+        .myMenu ul{
+            /*float: left;*/
+        }
+        .myMenu ul li{
+            list-style-type: none;
+            border: 1px solid  gray;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="myMenu">
+    <ul>
+        <li>我的</li>
+        <li>你的</li>
+        <li>它的</li>
+    </ul>
+</div>
+<table id="tab">
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<td>姓名</td>-->
+        <!--<td class="title">数学 <span class="up"></span>-->
+            <!--<span class="down"></span>-->
+        <!--</td>-->
+        <!--<td class="title"> 语文-->
+            <!--<span class="up"></span>-->
+            <!--<span class="down"></span>-->
+        <!--</td>-->
+        <!--<td class="title">英语-->
+            <!--<span class="up"></span>-->
+            <!--<span class="down"></span>-->
+        <!--</td>-->
+        <!--<td class="title">总分-->
+            <!--<span class="up"></span>-->
+            <!--<span class="down"></span>-->
+        <!--</td>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr>-->
+        <!--<td>小明</td>-->
+        <!--<td>80</td>-->
+        <!--<td>90</td>-->
+        <!--<td>70</td>-->
+        <!--<td>240</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>小红</td>-->
+        <!--<td>90</td>-->
+        <!--<td>60</td>-->
+        <!--<td>90</td>-->
+        <!--<td>240</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>小亮</td>-->
+        <!--<td>60</td>-->
+        <!--<td>100</td>-->
+        <!--<td>70</td>-->
+        <!--<td>230</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+</table>
+<!--<button id="sort">正序</button>-->
+</body>
+</html>
+<script type="text/javascript">
+   //表头数据
+   var tabCon = document.getElementById("tab");
+   var body = document.getElementsByTagName("body")[0];
+   var myMenu = document.getElementsByClassName("myMenu")[0];
+   tabCon.oncontextmenu = function (e) {
+//       alert("oncontextmenu");
+       e.preventDefault();
+       myMenu.style.visibility = "visible";
+       myMenu.style.top = e.clientY +"px";
+       myMenu.style.left = e.clientX +"px";
+//       alert();
+
+   }
+    var dataHead ={
+        heads:[
+            {
+                name:"name",
+                label:"姓名",
+                sortable:false
+            },
+            {
+                name:"chinese",
+                label:"语文",
+                sortable:true
+
+            },
+            {
+                name:"math",
+                label:"数学",
+                sortable:true
+
+            },
+            {
+                name:"english",
+                label:"英语",
+                sortable:true
+            },
+            {
+                name:"total",
+                label:"总分",
+                sortable:true
+            }
+        ]
+    };
+    //表格内容数据
+    var datas = [
+   {
+       name:"小明",
+       chinese:90,
+       math:100,
+       english:70,
+       total:260
+
+   },
+   {
+       name:"小花",
+       chinese:90,
+       math:70,
+       english:80,
+       total:240
+   },
+        {
+            name:"小红",
+            chinese:70,
+            math:90,
+            english:70,
+            total:230
+        },
+        {
+            name:"小桃",
+            chinese:60,
+            math:100,
+            english:90,
+            total:250
+        },
+        {
+            name:"小张",
+            chinese:80,
+            math:80,
+            english:70,
+            total:230
+        }
+   ];
+     function init(){
+         addThead();
+         addTbody();
+     }
+     var tabCon = document.getElementById("tab");
+     var tabHeadLen = dataHead.heads.length;
+     var tabHead = dataHead.heads;
+      var dataLen = datas.length;
+     function addThead(){
+         var tHead = document.createElement("thead");
+         var trNode = addTr();
+         tabHead.forEach(function(head){
+             var  val = head.name;
+             var tdNode = addTd(head.label);
+             if (head.sortable) {
+                 var upNode = addUp();
+                 var downNode = addDown();
+                 tdNode.appendChild(upNode);
+                 tdNode.appendChild(downNode);
+                 upNode.onclick = function(){
+                     upSort(val);
+                 };
+                 downNode.onclick = function(){
+                     downSort(val);
+                 };
+             }
+             trNode.appendChild(tdNode);
+         }
+
+         )
+         tHead.appendChild(trNode);
+         tabCon.appendChild(tHead);
+     }
+      function addTbody(){
+         var tBody = document.createElement("tbody")
+         for(var i = 0 ;i<dataLen; i++){
+              var trNode = addTr();
+              for(var key in datas[i]){
+                  var tdNode = addTd(datas[i][key]);
+                  trNode.appendChild(tdNode);
+              }
+             tBody.appendChild(trNode);
+         }
+         tabCon.appendChild(tBody);
+   }
+     function  addTr() {
+         var trNode = document.createElement("tr");
+         return trNode;
+     }
+     function addTd(text){
+         var tdNode = document.createElement("td");
+        tdNode.innerText = text;
+         return tdNode;
+     }
+     function addUp(){
+         var upNode = document.createElement("span");
+         upNode.className = "up";
+         return upNode;
+     }
+   function addDown(){
+       var downNode = document.createElement("span");
+       downNode.className = "down";
+       return downNode;
+   }
+   function upSort(val){
+       datas.sort(function (a,b) {
+           return a[val]-b[val];
+       });
+       tabCon.innerHTML = " ";
+       init();
+   }
+   function downSort(val){
+       datas.sort(function (a,b) {
+           return b[val]-a[val];
+       });
+       tabCon.innerHTML = " ";
+       init();
+   }
+   init();
+
+
+
+</script>

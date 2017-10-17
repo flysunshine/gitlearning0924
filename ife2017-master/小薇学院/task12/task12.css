@@ -1,0 +1,172 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	padding-left: 20px;
+}
+table{
+	border: 1px solid #fff;
+	text-align: left;
+	width:300px;
+}
+table tr th{
+	background-color: black;
+	color: #fff;
+}
+table tr:nth-child(2){
+	color: red;
+}
+table tr:nth-child(3){
+	color: red;
+}
+table tr:nth-child(4){
+	color: red;
+}
+table tr:nth-child(odd){
+	background-color: #bbb;
+}
+input{
+	width: 100px;
+	transition: width 2s;
+}
+input:focus{
+	width: 200px;
+}
+/*轮播图*/
+.banner{
+	width: 300px;
+	height: 200px;
+	overflow: hidden;
+	position: relative;
+	/*border: 1px solid red;*/
+	/*display: inline-block;*/
+}
+.button{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.button a{
+	width: 50px;
+	height: 50px;
+	background-color: rgba(255,255,255,0.5);
+	margin-left: 2px;
+	line-height: 50px;
+	text-align: center;
+	display: inline-block;
+	text-decoration: none;
+}
+.button a:visited{
+	color: black;
+}
+.button a:link{
+	color: black;
+}
+.img{
+	/*display: inline-block;*/
+	width: 1000px;
+	/*border: 1px solid red;*/
+	font-size: 0;
+	word-spacing: 0;
+	letter-spacing: 0;
+}
+.img img{
+	width:300px;
+	height: 200px;
+	/*margin-left: 302px;*/
+	display: inline-block;
+	/*float: left;*/
+}
+.img img:nth-of-type(1){
+	background-color: green;
+}
+.img img:nth-of-type(2){
+	background-color: blue;
+}
+.img img:nth-of-type(3){
+	background-color: red;
+}
+.img{
+	position: relative;
+	animation-name: banner;
+	animation-duration: 8s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: infinite;
+	animation-direction: normal;
+	animation-play-state: running;
+}
+@keyframes banner{
+	0%{left: 0px;top: 0px;}
+	14.29%{left: 0px;top: 0px;}
+	42.86%{left: -300px;top: 0px;}
+	57.14%{left: -300px;top: 0px;}
+	85.71%{left: -600px;top: 0px;}
+	100%{left: -600px;top: 0px;}
+}
+
+/*---------------------------------------------------*/
+.banner2{
+	width: 300px;
+	height: 200px;
+	overflow: hidden;
+	position: relative;
+	/*border: 1px solid red;*/
+}
+.button2{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.button2 a{
+	width: 50px;
+	height: 50px;
+	background-color: rgba(255,255,255,0.5);
+	margin-left: 2px;
+	line-height: 50px;
+	text-align: center;
+	display: inline-block;
+	text-decoration: none;
+}
+.button2 a:visited{
+	color: black;
+}
+.button2 a:link{
+	color: black;
+}
+
+.img2{
+	width: 1000px;
+	position: relative;
+	transition: 2s left;
+}
+.img2 li{
+	width: 300px;
+	height: 200px;
+	display:block;
+	float: left;
+	list-style: none;
+}
+.img2 li:nth-of-type(1){
+	background-color: green;
+}
+.img2 li:nth-of-type(2){
+	background-color: blue;
+}
+.img2 li:nth-of-type(3){
+	background-color: red;
+}
+
+#banner1:target~.img2{
+	left: 0px;
+}
+#banner2:target~.img2{
+	left: -300px;
+}
+#banner3:target~.img2{
+	left: -600px;
+}
+span{
+	/*border: 1px solid blue;*/
+}

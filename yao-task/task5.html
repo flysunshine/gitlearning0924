@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body{
+            /*width: 100%;*/
+            /*height: 3000px;*/
+            /*background-color: gray;*/
+            /*filter:Alpha(Opacity=50);*/
+            /*opacity: 0.4;*/
+            /*z-index: 2;*/
+            margin: 0;
+            padding: 0;
+
+        }
+        .main{
+            position: relative;
+            width: 100%;
+            height: 1080px;
+        }
+        .musk{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:rgba(0, 0, 0, .5);
+            z-index: 2;
+        }
+        .contanier{
+            position: fixed;
+            /*z-index: 300;*/
+            /*float: left;*/
+            background-color: white;
+            z-index: 3;
+
+        }
+        #box{
+            width: 200px;
+            height: 100px;
+            /*background-color:red ;*/
+            /*z-index: 10;*/
+            border: 1px solid darkgrey;
+            position: relative;
+            cursor: move;
+
+
+        }
+        .title{
+            border: 1px solid lightgray;
+            background-color: lightgray;
+        }
+        #box button{
+            position: absolute;
+        }
+        #ok{
+            bottom: 10px;
+            left:100px ;
+        }
+        #cancel{
+            bottom: 10px;
+            left:150px ;
+        }
+        .show{
+            display: block;
+         }
+        .hide{
+            display: none;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="main">
+<button id="poop">弹框</button>
+<div class="musk hide">
+
+</div>
+
+
+<div class="contanier hide">
+<div id="box">
+    <div class="title">
+        这是一个浮出框
+    </div>
+    <div class="body">
+        这是浮出框内容
+    </div>
+    <button id="ok">确定</button>
+    <button  id="cancel">取消</button>
+</div>
+</div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript">
+window.onload = function(){
+    var winWidth = window.innerWidth;
+    var winHeight = window.innerHeight;
+    var contanier = document.getElementsByClassName("contanier")[0];
+    var musk = document.getElementsByClassName("musk")[0];
+    var btn = document.getElementById("poop");
+    var ok = document.getElementById("ok");
+    var cancel = document.getElementById("cancel");
+    contanier.style.top = (winHeight/2 - 50) +"px";
+    contanier.style.left = (winWidth/2 - 100) +"px";
+    btn.onclick = function(){
+        showMusk()
+    }
+   ok.addEventListener("click",hideMask);
+    cancel.addEventListener("click",hideMask);
+    musk.onclick =function () {
+        hideMask();
+    }
+    function showMusk(){
+        contanier.classList.remove("hide");
+        contanier.classList.add("show");
+        musk.classList.remove("hide");
+        musk.classList.add("show");
+    }
+    function hideMask() {
+        contanier.classList.remove("show");
+        contanier.classList.add("hide");
+        musk.classList.remove("show");
+        musk.classList.add("hide");
+
+    }
+    //实现弹出面板的拖动
+//定义参数
+    var params = {
+        left: 0,
+        top: 0,
+        currentX: 0,
+        currentY: 0,
+        flag: false
+    };
+    function getCss(node, key) {
+        return window.getComputedStyle(node, null)[key];
+    }
+    function drag(target){
+        alert("drag");
+        alert(target.className);
+
+//
+        params.left = getCss(target,"left");
+        params.top = getCss(target,"top");
+        alert(params.left );
+        target.onmousedown =function (e) {
+            params.flag = true;
+            alert(params.left )
+//            alert(e.clientX);
+            params.currentX = e.clientX;
+            params.currentY = e.clientY;
+           e.preventDefault();
+           // alert("drag");
+        }
+        target.onmouseup =function (e) {
+            params.flag = false;
+            params.left = getCss(target, 'left');
+            params.top = getCss(target, 'top');
+
+//            params.currentX = e.clientX;
+//            params.currentY = e.clientY;
+            // alert("drag");
+        }
+        target.onmousemove = function (e) {
+            if(params.flag){
+//                console.log(e.clientX);
+                var nowX = e.clientX;
+                var nowY = e.clientY;
+//                alert(params.left);
+                target.style.left = nowX - params.currentX + parseInt(params.left)+"px";
+                target.style.top = nowY - params.currentY + parseInt(params.top)+"px";
+            }
+
+        }
+
+
+    }
+   drag(contanier);
+
+
+
+window.onresize = function(){
+//        alert("dd");
+    var winWidth = window.innerWidth;
+    var winHeight = window.innerHeight;
+    contanier.style.top = (winHeight/2) +"px";
+    contanier.style.left = (winWidth/2 ) +"px";
+   contanier.style.transform = "translate(-50%,-50%)";
+    alert(winWidth);
+    alert(contanier.style.left);
+}
+
+
+}
+</script>
+//实现弹出面板的拖动
+//定义参数
+var params = {
+left: 0,
+top: 0,
+currentX: 0,
+currentY: 0,
+flag: false
+};
+//获取元素的坐标
+function getCss(node, key) {
+return document.defaultView.getComputedStyle(node, null)[key];
+}
+//拖拽函数
+function drag(target) {
+//获取弹出层现在的位置
+params.left = getCss(target, 'left');
+params.top = getCss(target, 'top');
+
+target.onmousedown = function(evt) {
+//设置标记为true
+params.flag = true;
+//阻止鼠标按下时的默认事件
+evt.preventDefault();
+//记录鼠标按下时,鼠标在窗口中的位置
+params.currentX = evt.clientX;
+params.currentY = evt.clientY;
+};
+
+target.onmouseup = function(evt) {
+//设置标记为false
+params.flag = false;
+//更新弹出层在窗口中的位置数据
+params.left = getCss(target, 'left');
+params.top = getCss(target, 'top');
+};
+
+target.onmousemove = function(evt) {
+if (params.flag) {
+//记录鼠标现在在窗口中的位置
+var nowX = evt.clientX;
+var nowY = evt.clientY;
+//通过鼠标现在的位置减去鼠标按下时的位置,来计算鼠标移动的距离
+var disX = nowX - params.currentX;
+var disY = nowY - params.currentY;
+//用弹出层原来的位置加上鼠标移动的距离,来更新弹出层的位置
+target.style.left = parseInt(params.left) + disX + 'px';
+target.style.top = parseInt(params.top) + disY + 'px';
+}
+};
+}
+drag(panel);

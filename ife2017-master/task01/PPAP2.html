@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PPAP</title>
+	<style>
+		#tip{
+			font-size: 10px;
+			color: rgb(153,153,153);
+		}
+		input{
+			display: none;
+		}
+		.box{
+			text-align: center;
+		}
+		#word{
+			width: 300px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		#pen:checked ~ .box::before {
+			content: "A PEN";
+			background-color: #FFBA10;
+		}
+		#apple:checked ~ .box::after{
+			content: "AN APPLE";
+			background-color: #5BC8F7;
+		}
+		#apple-pen:checked ~ .box::after{
+			content: "APPLE-PEN";
+			background-color: #CCFF99;
+		}
+		#pineapple:checked ~ .box::after{
+			content: "PINEAPPLE";
+			background-color: #5BC8F7;
+		}
+		#pineapple-pen:checked ~ .box::after{
+			content: "PINEAPPLE-PEN";
+			background-color: #CCFF99;
+		}
+		#ppap:checked ~ .box::after{
+			content: "PEN-PINEAPPLE-APPLE-PEN";
+			background-color: #CCFF99;
+		}
+	</style>
+</head>
+<body>
+<div id="word">
+	<input type="radio" name="radio" id="pen"/>
+	<input type="radio" name="radio" id="apple"/>
+	<input type="radio" name="radio" id="pineapple"/>
+	<input type="radio" name="radio" id="apple-pen"/>
+	<input type="radio" name="radio" id="pineapple-pen"/>
+	<input type="radio" name="radio" id="ppap"/>
+	<h1>PPAP</h1>
+	<p id="tip">点击歌词有惊喜</p>
+	<p><label for="pen">I have a pen,</label></p>
+	<p><label for="apple">I have an apple.</label></p>
+	<p><label for="apple-pen">(Uhh~)Apple-pen!</label></p>
+	<p><label for="pen">I have a pen,</label></p>
+	<p><label for="pineapple">I have pineapple.</label></p>
+	<p><label for="pineapple-pen">(Uhh~)Pineapple-pen!</label></p>
+	<p><label for="apple-pen">Apple-pen~</label></p>
+	<p><label for="pineapple-pen">Pineapple-pen~</label></p>
+	<p><label for="ppap">(Uhh\h~)Pen-Pineapple-Apple-pen!</label></p>
+	<br/>
+	<p class="box">PICO太郎have</p>
+</div>
+</body>
+</html>

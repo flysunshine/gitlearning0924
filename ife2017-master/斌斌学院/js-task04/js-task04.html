@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-task04</title>
+	<style>
+		button{
+			border: 1px solid #ccc;
+			border-radius: 2px;
+			padding: 2px;
+			font-size: 10px;
+			font-weight: bold;
+			margin-left: 10px;
+		}
+		.eles{
+			background-color: red;
+			margin: 5px 5px 0 0;
+			display: inline-block;
+			padding: 2px;
+			font-size: 24px;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<input id="val" type="text">
+	<button>左侧入</button>
+	<button>右侧入</button>
+	<button>左侧出</button>
+	<button>右侧出</button>
+	<div id="container"></div>
+	<script>
+		var par = document.getElementById("container");
+		var val = document.getElementById("val");
+		// 创建元素，添加样式类，添加文本节点,分配点击事件
+		function myele(){
+			var ele = document.createElement("p");
+			ele.setAttribute("class","eles");
+			ele.innerHTML = val.value;
+			ele.onclick = function(){
+				par.removeChild(this);
+			}
+			return ele;
+		}
+		// 左侧进入
+		function left_in(t){
+			if(t){
+				par.insertBefore(myele(),par.childNodes[0]);
+				val.value = "";	
+			}
+		}
+		// 右侧进入
+		function right_in(t){
+			if(t){
+				par.appendChild(myele());
+				val.value = "";
+			}
+		}
+		// 左侧出
+		function left_out(){
+			if(!par.childNodes.length) return false;
+			alert(par.firstChild.innerHTML);
+			par.removeChild(par.firstChild);
+			val.value= "";
+		}
+		// 右侧出
+		function right_out(){
+			if(!par.childNodes.length) return false;
+			alert(par.lastChild.innerHTML);
+			par.removeChild(par.lastChild);
+			val.value = "";
+		}
+		// 验证输入的值
+		function ToF(){
+			// 用正则验证是否为整数，小数
+			var pattern = /^\-?\d+\.?\d*$/;
+			if(val.value){
+				if(pattern.test(val.value)){
+					return true;
+				}
+				else{
+					alert("您输入的格式不正确，请输入数字！");
+					val.value = "";
+					return false;
+				}
+			}
+			else {
+				alert("不能为空，请输入数字！");
+				return false;
+			}
+		}
+		// 为按钮添加点击事件
+		function going(){
+			var btn = document.getElementsByTagName("button");
+			btn[0].onclick = function(){left_in(ToF())};
+			btn[1].onclick = function(){right_in(ToF())};
+			btn[2].onclick = function(){left_out()};
+			btn[3].onclick = function(){right_out()};
+		}
+		going();
+	</script>
+</body>
+</html>

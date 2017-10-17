@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-task05</title>
+	<style>
+		button{
+			border: 1px solid #ccc;
+			border-radius: 2px;
+			padding: 2px;
+			font-size: 10px;
+			font-weight: bold;
+			margin-left: 10px;
+		}
+		.eles{
+			background-color: red;
+			margin: 5px 5px 0 0;
+			display: inline-block;
+			/*width:20px;*/
+			font-size: 10px;
+			color: #fff;
+			vertical-align: bottom;
+			bottom: 0;
+			transition: height 1s;
+			-moz-transition: height 1s;
+			-webkit-transition: height 1s;
+			-o-transition: height 1s;
+		}
+		#container{
+			height:120px;
+			/*border: 1px solid blue;*/
+		}
+	</style>
+</head>
+<body>
+	<input id="val" type="text">
+	<button>左侧入</button>
+	<button>右侧入</button>
+	<button>左侧出</button>
+	<button>右侧出</button>
+	<button>排序</button>
+	<button>随机50连</button>
+	<div id="container"></div>
+	<script>
+		var par = document.getElementById("container");
+		var val = document.getElementById("val");
+		// 创建元素，添加样式类，添加文本节点,分配点击事件
+		function myele(){
+			var ele = document.createElement("p");
+			ele.setAttribute("class","eles");
+			ele.innerHTML = val.value;
+			ele.style.height = val.value + "px"
+			ele.onclick = function(){
+				par.removeChild(this);
+			}
+			return ele;
+		}
+		// 左侧进入
+		function left_in(t){
+			if(t){
+				if(par.childNodes.length>=60){
+					alert("添加失败！最多添加60个数字！")
+					return false;
+				}
+				else{
+					par.insertBefore(myele(),par.childNodes[0]);
+					val.value = "";	
+				}
+			}
+		}
+		// 右侧进入
+		function right_in(t){
+			if(t){
+				if(par.childNodes.length>=60){
+					alert("添加失败！最多添加60个数字！")
+					return false;
+				}
+				else{
+					par.appendChild(myele());
+					val.value = "";
+				}
+			}
+		}
+		// 左侧出
+		function left_out(){
+			if(!par.childNodes.length) return false;
+			alert(par.firstChild.style.height.match(/\d+/)[0]);
+			par.removeChild(par.firstChild);
+			val.value= "";
+		}
+		// 右侧出
+		function right_out(){
+			if(!par.childNodes.length) return false;
+			alert(par.lastChild.style.height.match(/\d+/)[0]);
+			par.removeChild(par.lastChild);
+			val.value = "";
+		}
+		// 验证输入的值
+		function ToF(){
+			// 用正则验证是否为整数，小数
+			var pattern = /^\-?\d+\.?\d*$/;
+			if(val.value){
+				if(pattern.test(val.value)){
+					if(val.value>=10 && val.value<=100){
+						return true;
+					}
+					else{
+						alert("请输入10-100的数字！")
+						return false;
+					}
+				}
+				else{
+					alert("您输入的格式不正确，请输入数字！");
+					return false;
+				}
+			}
+			else {
+				alert("不能为空，请输入数字！");
+				return false;
+			}
+		}
+
+		// 我不确定这是不是叫选择排序，但是能排！
+		function sel_sort() {
+			var a = par.childNodes;
+            for (var min = 0; min < a.length - 1; min++) {
+            	// 默认第一项为最小项
+                for (var inner = min + 1; inner < a.length; inner++) {
+                	// 用正则匹配子元素高度值,比较
+                	var minh = a[min].style.height.match(/\d+/)[0];
+                	var innerh = a[inner].style.height.match(/\d+/)[0];
+                    if ( parseInt(innerh) < parseInt(minh)) {
+                    //将最小的项移动到最前面,这里是移动DOM元素，没有通过改变元素高度
+                    // par.insertBefore(a[inner],a[min]);
+                    // 通过改变元素高度
+                    var temp = parseInt(minh);
+                    a[inner].style.height = temp +"px";
+                    a[inner].innerHTML = temp;
+                    a[min].style.height = parseInt(innerh) + "px";
+                    a[min].innerHTML = parseInt(innerh);
+                	}
+                }
+            }
+
+		}
+		// 生成50个随机数
+		function randomary(){
+			par.innerHTML = "";
+			var random_ary = [];
+			for(i=0;i<50;i++){
+				random_ary[i] = Math.round(Math.random()*90+10);
+				val.value = random_ary[i];
+				par.insertBefore(myele(),par.childNodes[0]);
+			}
+			val.value = "";
+		}
+		// 为按钮添加点击事件
+		function going(){
+			var btn = document.getElementsByTagName("button");
+			btn[0].onclick = function(){left_in(ToF())};
+			btn[1].onclick = function(){right_in(ToF())};
+			btn[2].onclick = function(){left_out()};
+			btn[3].onclick = function(){right_out()};
+			btn[4].onclick = function(){sel_sort()};
+			btn[5].onclick = function(){randomary()};
+		}
+		going();
+	</script>
+</body>
+</html>

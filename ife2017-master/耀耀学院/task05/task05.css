@@ -1,0 +1,55 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	padding:50px 0 0 400px;
+}
+table{
+	border: 1px solid #ccc;
+	outline: 1px solid #000;
+	border-collapse: collapse;
+}
+table td{
+	width: 40px;
+	height: 40px;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+.col{
+	margin-left: -30px;
+}
+.row{
+	margin-top: -50px;
+	margin-left: 10px;
+}
+#num1 .col{
+	position: relative;
+	top: 1em;
+}
+#item{
+	width: 40px;
+	/*animation: itemdh 1s;*/
+}
+#itemHead{
+	width: 40px;
+	height: 10px;
+	background-color: blue;
+}
+#itemBody{
+	width: 40px;
+	height: 30px;
+	background-color: red;
+}
+#btn{
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-left: 20px;
+	display: inline-block;
+	width: 50px;
+	text-align: center;
+	background-color: #fff;
+}
+/*@keyframes itemdh{
+	from{}
+}*/

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        #theNum{
+            float:left;
+            width: 500px;
+        }
+        #theNum li{
+           /*// float: left;*/
+            display: inline-block;
+            width: 20px;
+            list-style-type: none;
+            height: 50px;
+            line-height: 50px;
+            background-color: red;
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+    <!--<input type="text" id="theText" >-->
+
+    <textarea name="" id="theText" cols="30" rows="10"></textarea>
+    <button id="leftIn">
+        左侧入
+    </button>
+    <button id="rightIn">
+        右侧入
+    </button>
+    <button id="leftOut">
+        左侧出
+    </button>
+    <button id="rightOut">
+        右侧出
+    </button>
+    <button id="sort">
+        排序
+    </button>
+    <input type="text" id="search">
+    <button id="searchBtn">搜索</button>
+    <ul id="theNum">
+
+    </ul>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+    var ulList = document.getElementById("theNum");
+     var textNodeC = document.getElementById("theText");
+    var ulListLast = document.getElementById("theNum").lastChild;
+    var btn1 = document.getElementById("leftIn");
+    var btn2 = document.getElementById("rightIn");
+    var btn3 = document.getElementById("leftOut");
+    var btn4 = document.getElementById("rightOut");
+    var sort = document.getElementById("sort");
+    var  search = document.getElementById("search");
+//    var searchCont = search.value;
+//    var reg = new RegExp(searchCont);
+    var searchBtn = document.getElementById("searchBtn");
+   function decide(direction){
+     //  var node = document.createElement("li");
+    // node.innerText = textNodeC.value;
+//      var theTextarea = textNodeC.value.split(/\s+|\s*,\s*|\s*，\s*|\s*、\s*/);
+       var theTextarea = textNodeC.value.split(/[\s,，、]+/);
+      var num =  theTextarea.length;
+     alert( theTextarea[0] +"第二个"+theTextarea[1]+"第三个"+theTextarea[2]+"第四个"+theTextarea[3]);
+       alert( theTextarea.length);
+       if(textNodeC.value == ""){
+           alert("请输入内容");
+           textNodeC.focus();
+       }
+//       else if(isNaN(textNodeC.value )){
+//           alert("请输入一个数字");
+//           textNodeC.value = "";
+//           textNodeC.focus();
+//       }
+//       else if(10<textNodeC.value &&textNodeC.value<100)
+         else{
+           if(direction == "left"){
+               for(var i =0;i<num;i++){
+                   if(theTextarea[i]) {
+                       var node = document.createElement("li");
+                       node.innerText = theTextarea[i];
+                       ulList.insertBefore(node, ulList.firstChild);
+                   }
+
+               }
+
+              // ulList.insertBefore(node,ulList.firstChild);
+//               var the = ulList.firstChild;
+//               the.setAttribute("height",textNodeC.value+"px");
+              // ulList.firstChild.setAttribute("height",textNodeC.value+"px");
+              // ulList.firstChild.style.backgroundColor = "black";
+             //  ulList.firstChild.style.height = textNodeC.value+"px";
+            //   alert( parseInt(ulList.firstChild.style.height));
+           }
+           else{
+               for(var i =0;i<num;i++){
+                   if(theTextarea[i]) {
+                       var node = document.createElement("li");
+                       node.innerText = theTextarea[i];
+//                       ulList.insertBefore(node, ulList.firstChild);
+                       ulList.appendChild(node);
+                   }
+
+               }
+
+
+
+
+           }
+       }
+//       else{
+//           textNodeC.value = "";
+//           textNodeC.focus();
+//       }
+
+
+   }
+    btn2.onclick = function(){
+//        if(textNodeC.value == ""){
+//            alert("请输入内容");
+//            textNodeC.focus();
+//        }
+//        else if(isNaN(textNodeC.value)){
+//            alert("请输入一个数字");
+//            textNodeC.value = "";
+//            textNodeC.focus();
+//        }
+//        else {
+//
+//            var node = document.createElement("li");
+//            node.innerHTML = textNodeC.value;
+//            ulList.appendChild(node);
+//        }
+        decide("right");
+    }
+    btn1.onclick = function(){
+//        var node = document.createElement("li");
+//        node.innerHTML = textNodeC.value;
+//        ulList.insertBefore(node,ulList.firstChild);
+        decide("left");
+
+    }
+    btn3.onclick = function(){
+        alert(ulList.firstChild.innerText);
+        ulList.removeChild( ulList.firstChild);
+    }
+    btn4.onclick = function(){
+         ulList.removeChild( ulList.lastChild);
+        alert(ulList.lastChild.innerText);
+    }
+    sort.onclick = function(){
+        var arry = [];
+//        var num = ulList.childNodes.length;
+//        alert(num);
+        for(var i = 0;i <ulList.childNodes.length-1;i++){
+            arry.push( parseInt(ulList.childNodes[i].style.height));
+        }
+//        var nodes = ulList.childNodes[0].style.height;
+//        var nodes2 = ulList.childNodes[2].style.height;
+        arry.sort();
+        for(var i = 0;i <ulList.childNodes.length-1;i++){
+            ulList.childNodes[i].style.height = arry[i]+"px";
+        }
+       // alert(arry);
+    }
+//    var x = ulList.childNodes[0];
+   var liList=ulList.getElementsByTagName("li");
+
+    ulList.onclick = function(e){
+      //  alert( event.target == ulList);
+        alert( liList[0].innerHTML);
+        ulList.removeChild( event.target);
+    }
+    searchBtn.onclick = function() {
+        var searchCont = search.value;
+        var reg = new RegExp(searchCont);
+        for (var i = 0; i < ulList.childNodes.length - 1; i++) {
+           if (ulList.childNodes[i].innerText.search(reg) != -1) {
+               //alert("yes");
+             var pos =  ulList.childNodes[i].innerText.search(reg);
+               alert(pos);
+               alert(ulList.childNodes[i].innerText);
+               alert(searchCont);
+               ulList.childNodes[i].style.color = "yellow";
+            }
+            //  alert("ss");
+           // alert(typeof ulList.childNodes[0].innerText);
+//        }
+        }
+    }
+
+</script>

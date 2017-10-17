@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            box-sizing: border-box;
+        }
+        .contanier{
+            position: relative;
+            width: 550px;
+            height: 550px;
+            margin: 0 auto;
+        }
+        #box{
+            border-collapse: collapse;
+            /*margin: 0 auto;*/
+            /*position: relative;*/
+        }
+        #box tbody{
+            position: relative;
+        }
+        #box td{
+            border: 1px solid lightgray;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+        #box .num{
+            border: none;
+        }
+        #square{
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            /*transform-origin: 15px 25px;*/
+            /*padding-left: 20px;*/
+        }
+        #blue{
+            width: 20px;
+            height: 50px;
+            background-color: blue;
+        }
+        .directions{
+            margin: 20px auto;
+            text-align: center;
+        }
+        .detail{
+            float: left;
+            /*border: 1px ;*/
+        }
+        .detail table{
+            border: 1px solid lightgray;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<div class="contanier">
+<table id="box">
+
+    <tbody>
+    <tr >
+        <td class="num"></td>
+        <td class="num">1</td>
+        <td class="num">2</td>
+        <td class="num">3</td>
+        <td class="num">4</td>
+        <td class="num">5</td>
+        <td class="num">6</td>
+        <td class="num">7</td>
+        <td class="num">8</td>
+        <td class="num">9</td>
+        <td class="num">10</td>
+    </tr>
+    <tr>
+        <td class="num">1</td>
+        <td ></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">3</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">4</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">5</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">6</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">7</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">8</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">9</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td  class="num">10</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<div id="square" >
+    <div id="blue">
+
+    </div>
+</div>
+    <!--<div class="detail">-->
+        <!--<table>-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<td>指令名称</td>-->
+                <!--<td>指令描述</td>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<td>TUN LEF</td>-->
+            <!--<td>向左转</td>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+</div>
+<div class="directions">
+    <input type="text" id="instruction">
+    <button>GO</button>
+    </br>
+    </br>
+<button>左转</button>
+<button>右转</button>
+<button>前进</button>
+</div>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+    window.onload = function(){
+        var btn = document.getElementsByTagName("button");
+//        var square = document.getElementById("square");
+        var x = 0;
+        var sum = 0;
+        var square = document.getElementById("square");
+//        var top = parseInt( window.getComputedStyle(square,null).top);
+//        var left = parseInt( window.getComputedStyle(square,null).left);
+        function  move(num) {
+            var top = parseInt( window.getComputedStyle(square,null).top);
+            var left = parseInt( window.getComputedStyle(square,null).left);
+            switch (num) {
+                case 0:
+                    if(left>50) {
+                        square.style.left = (left - 50) + "px";
+                    }
+                    break;
+                case 3:
+                    if(top<500) {
+                        square.style.top = (top + 50) + "px";
+                    }
+                    break;
+                case 2:
+                    if(left<500) {
+                        square.style.left =(left + 50) + "px";
+                    }
+                    break;
+                case 1:
+                    if(top>50) {
+                        square.style.top =(top - 50) + "px";}
+                    break;
+            }
+        }
+        btn[0].onclick = function(){
+            var instru = document.getElementById("instruction").value;
+            var t = (x%360)/90;
+
+// TUN LEF：向左转（逆时针旋转90度）
+//TUN RIG：向右转（顺时针旋转90度）
+//TUN BAC：向右转（旋转180度）
+//            TRA LEF：向屏幕的左侧移动一格，方向不变
+//            TRA TOP：向屏幕的上面移动一格，方向不变
+//            TRA RIG：向屏幕的右侧移动一格，方向不变
+//            TRA BOT：向屏幕的下面移动一格，方向不变
+//            MOV LEF：方向转向屏幕左侧，并向屏幕的左侧移动一格
+//            MOV TOP：方向转向屏幕上面，向屏幕的上面移动一格
+//            MOV RIG：方向转向屏幕右侧，向屏幕的右侧移动一格
+//            MOV BOT：方向转向屏幕下面，向屏幕的下面移动一格
+            switch (instru){
+                case "TUN LEF": turnLeft();
+                    break;
+                case "TUN RIG": turnRight();
+                    break;
+                case "TUN BAC": turnBack();
+                     break;
+                case "TRA LEF": {alert("tra lef");move(0);};
+                    break;
+                case "TRA TOP": {alert("tra lef");move(1);};
+                    break;
+                case "TRA RIG": {alert("tra lef");move(2);};
+                    break;
+                case "TRA BOT": {alert("tra lef");move(3);};
+                    break;
+                case "MOV LEF": {
+                    while(t!=0){
+                        turnRight();
+                        t = (x%360)/90;
+                    }
+                  //  square.style.transform = "rotate("+x+"deg)";
+                     move(0);
+
+                };
+                    break;
+                case "MOV TOP": {
+                    while(t!=1){
+                        turnRight();
+                        t = (x%360)/90;
+                    }
+                    //  square.style.transform = "rotate("+x+"deg)";
+                   move(1);
+                    //setTimeout("move(1)",1000);
+                };
+                    break;
+                case "MOV RIG": {
+                    while(t!=2){
+                        turnRight();
+                        t = (x%360)/90;
+                    }
+                    //  square.style.transform = "rotate("+x+"deg)";
+                    move(2);
+                  //  setTimeout("move(2)",1000);
+                };
+                    break;
+                case "MOV BOT": {
+                    while(t!=3){
+                        turnRight();
+                        t = (x%360)/90;
+                    }
+                    //  square.style.transform = "rotate("+x+"deg)";
+                  move(3);
+                  //  setTimeout("move(3)",1000);
+                };
+                    break;
+                case "":alert("请输入指令");
+                break;
+                default:alert("请输入正确的指令");
+                break;
+            }
+        }
+        function turnLeft() {
+            x  += 270 ;
+//            transform: rotate(90deg);
+//            alert("1")
+            square.style.transform = "rotate("+x+"deg)";
+//            alert("2")
+//            i++;
+//            alert(x);
+            sum--;
+        }
+        function turnBack() {
+            x  += 180 ;
+//            transform: rotate(90deg);
+//            alert("1")
+            square.style.transform = "rotate("+x+"deg)";
+//            alert("2")
+//            i++;
+//            alert(x);
+            sum +=2;
+        }
+        btn[1].onclick = function(){
+            turnLeft();
+        }
+        function turnRight(){
+            x += 90;
+//            var x = -90*j;
+            square.style.transform = "rotate("+x+"deg)";
+//            j++;
+//            alert(x);
+            sum++;
+        }
+        btn[2].onclick = function(){
+            turnRight();
+        }
+
+
+        btn[3].onclick = function(){
+         //   square.stle只能能获得在元素标签内设置的样式，getComputedStyle获得所有的样式，第二个参数为伪元素
+          //  var top = parseInt( window.getComputedStyle(square,null).top);
+          //  var left = parseInt( window.getComputedStyle(square,null).left);
+            var direc = Math.abs(sum%4);//方向为 0，1，2，3 左 下 右 上
+//           alert(top);
+         move(direc);
+          //  setTimeout("move(direc)",1000);
+//            switch (direc) {
+//                case 0:
+//                    if(left>50) {
+//                        square.style.left = (left - 50) + "px";
+//                    }
+//                break;
+//                case 3:
+//                    if(top<500) {
+//                        square.style.top = (top + 50) + "px";
+//                    }
+//                break;
+//                case 2:
+//                    if(left<500) {
+//                    square.style.left =(left + 50) + "px";
+//                    }
+//                    break;
+//                case 1:
+//                    if(top>50) {
+//                    square.style.top =(top - 50) + "px";}
+//                    break;
+//            }
+        }
+    }
+</script>

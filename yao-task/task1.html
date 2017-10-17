@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="GBK">
+    <title>Document</title>
+    <style type="text/css">
+        div{
+            margin: 40px;
+        }
+        input,label{
+            margin-right: 20px;
+        }
+        .hint{
+            margin: 0 0 0 50px;
+            font-size: 14px;
+            color: #888888;
+        }
+        #text{
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+            border: 1px solid lightgray;
+        }
+        .hide{
+            color: white;
+        }
+        .show{
+            color:black;
+        }
+
+    </style>
+</head>
+<body>
+<div class="outer">
+<label for="name">姓名</label>
+    <!--<div class="text" id="name"></div>-->
+<input type="text" id="name" >
+<button class="query">验证</button>
+    <div class="hint hide">
+        必填，长度为4-16个字符
+    </div>
+</div>
+<div class="outer">
+    <label for="name1">姓名</label>
+    <input type="text" id="name1">
+    <button>验证</button>
+    <div class="hint hide">
+        必填，长度为4-16个字符
+    </div>
+</div>
+<div class="outer">
+    <label for="name2">姓名</label>
+    <input type="text" id="name2">
+    <button>验证</button>
+    <div class="hint hide">
+        必填，长度为4-16个字符
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    var btn = document.getElementsByClassName("query")[0];
+    var text1 = document.getElementById("name");
+    var inputs = document.getElementsByTagName("input");
+    var outer = document.getElementsByClassName("outer")[0];
+   // alert("ss");
+
+  var addHandler = function(){
+      var helper1 = function (i) {
+          return function(e){
+            // alert(i);
+              inputs[i].parentNode.lastElementChild.classList.add("show");
+              inputs[i].parentNode.lastElementChild.classList.remove("hide");
+             // alert("focus");
+          }
+
+      };
+      var helper2 = function (i) {
+          return function(e)
+          {
+              validate(inputs[i]);
+            //  alert("focus");
+          }
+      };
+      for(var i = 0;i<inputs.length;i++){
+          // return function(){
+         // alert(i);
+
+          inputs[i].onfocus = helper1(i);
+          inputs[i].onblur = helper2(i);
+      }
+  }
+    addHandler();
+    function validate(input) {
+        var texts = input.value;
+       // var text1 =text;
+        if(texts ==""){
+            input.parentNode.lastElementChild.innerHTML = "请输入内容";
+//            alert( input.parentNode.lastElementChild.style.color);
+            input.parentNode.lastElementChild.style.color = "red";
+
+            input.style.borderColor = "red";
+            return false;
+        }
+        var len = texts.length;
+        var sum=0;
+        var codeval;
+        for(var i = 0;i <len;i++){
+            codeval = texts.charCodeAt(i);
+            if(codeval <=0xff&&codeval>=0x00){
+                sum+=1;
+            }
+            else{
+                sum+=2;
+            }
+        }
+        if(sum<4||sum>16) {
+            input.parentNode.lastElementChild.innerHTML = "请输入4-16位字符";
+           // input.parentNode.lastElementChild.innerHTML = "red";
+            input.style.borderColor = "red";
+            input.value = "";
+            input.focus();
+            return false;
+           // alert("fail");
+           // alert(text);
+        }
+        else{
+          //  alert("sucess");
+            input.parentNode.lastElementChild.innerHTML = "格式正确";
+           input.parentNode.lastElementChild.color= "green";
+            input.style.borderColor = "lightgray";
+          //  alert("sucess");
+            return true;
+            //  text1.style.borderColor = "white";
+
+        }
+
+    }
+//  if(inputs[1].onblur()){
+//        alert("wow");
+//  }
+    btn.onclick = function(){
+        var text;
+        text =text1.value;
+        if(text ==""){
+            outer.lastElementChild.innerHTML = "请输入内容";
+            outer.lastElementChild.style.color = "red";
+            text1.style.borderColor = "red";
+            return false;
+
+        }
+            var len = text.length;
+            var sum=0;
+            var codeval;
+            for(var i = 0;i <len;i++){
+                codeval = text.charCodeAt(i);
+                if(codeval <=0xff&&codeval>=0x00){
+                    sum+=1;
+                }
+                else{
+                    sum+=2;
+                }
+            }
+            if(sum<4||sum>16) {
+                outer.lastElementChild.innerHTML = "请输入内容";
+                outer.lastElementChild.style.color = "red";
+                text1.style.borderColor = "red";
+                text1.value = "";
+                text1.focus();
+                alert("fail");
+                alert(text);
+            }
+            else{
+                alert("sucess");
+                outer.lastElementChild.innerHTML = "格式正确";
+                outer.lastElementChild.style.color = "green";
+              text1.style.borderColor = "lightgray";
+              //  text1.style.borderColor = "white";
+
+            }
+
+
+
+    }
+</script>

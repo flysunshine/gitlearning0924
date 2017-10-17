@@ -1,0 +1,165 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+body{
+	font-size: 16px;
+	background-color: #f5f5f5;
+	margin-left: -1px;
+	margin-bottom: 50px;
+}
+.background{
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+.header{
+	/*display: flex;*/
+	width: 100%;
+	background-color: #91d4da;
+	text-align: center;
+	color: #fff;
+	height: 3em;
+	line-height: 3em;
+	font-size: 1em;
+}
+.goback{ 
+	/*flex-grow: 1;*/
+	float: left;
+	margin-left: 0.5em;
+	font-size: 1em;
+}
+.back_arrow{
+	display: inline-block;
+	width: 0.5em;
+	height: 0.5em;
+	border-top: 0.2em solid #fff;
+	border-left: 0.2em solid #fff;
+	transform: rotate(-45deg);
+	border-radius: 4px;
+}
+.text-top{
+	width: 100%;
+	margin-left: -3em;
+}
+img{
+	width: 100%;
+	display: block;
+}
+.box,.box2,.box3{
+	display: flex;
+	background-color: #fff;
+}
+.box,.box2,.box3, .items{
+	flex: 1;
+	text-align: center;
+}
+.box a{
+	text-align: center;
+	text-decoration: none;
+	height: 3em;
+	line-height: 3em;
+	box-sizing: border-box;
+}
+.box a:link{
+	color: #686868;
+}
+.box a:hover{
+	border-bottom: 5px solid #94d5db;
+}
+.box a:visited{
+	color: #686868;
+}
+.tag{
+	margin: 0 10px;
+}
+.wrap{
+	padding: 10px;
+}
+.tag p{
+	font-size: 0.5em;
+	line-height: 2em;
+	height: 2em;
+}
+.hr{
+	background-color: #ccc;
+	margin-top: 10px;
+	height: 1px;
+}
+.col{
+	border-right: 1px solid #ccc;
+}
+.box3{
+	padding: 10px 0 20px 0;
+	margin-right: -1px;
+	margin-bottom: 10px;
+}
+.col p:nth-of-type(2){
+	font-size: 0.5em;
+	color: #686868;
+}
+.module{
+	padding: 10px;
+}
+.module .hr{
+	margin: 1em 0;
+}
+.module .box .items:nth-of-type(1){
+	flex: 1;
+}
+.module .box .items:nth-of-type(2){
+	flex: 3;
+}
+.module table{
+	width: 100%;
+	padding-left: 10px;
+}
+.module table tr td{
+	/*background-color: #ccc;*/
+	line-height: 2em;
+	box-sizing: border-box;
+	border-bottom: 5px solid #fff;
+	border-right: 5px solid #fff;
+}
+.module table tr td p{
+	background-color: #f5f5f5;
+}
+.box4{
+	padding: 10px;
+	display: flex;
+	margin-bottom: 2px;
+}
+.box4 .items:nth-of-type(1){
+	flex: 1;
+}
+.box4 .items:nth-of-type(2){
+	flex: 2;
+	text-align: left;
+	position: relative;
+	margin-left: 10px;
+}
+.box4 .items p:nth-of-type(1){
+	color: #656565;
+	font-size: 22px;
+}
+.box4 .items p:nth-of-type(2){
+	position: absolute;
+	bottom: 0;
+	color: #ccc;
+}
+.box5{
+	display: flex;
+	margin: 5px 0;
+}
+.box5 .items{
+	flex: 1;
+}
+.box5 .items{
+	margin-right: 5px;
+}
+.last-div p:nth-of-type(1){
+	font-size: 22px;
+	color: #656565;
+}
+.last-div p:nth-of-type(2){
+	color: #ccc;
+}

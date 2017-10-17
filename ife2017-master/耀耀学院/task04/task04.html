@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task04</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			padding:50px 0 0 400px;
+		}
+		table{
+			border: 1px solid #ccc;
+			outline: 1px solid #000;
+			border-collapse: collapse;
+		}
+		table td{
+			width: 40px;
+			height: 40px;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		.col{
+			margin-left: -30px;
+		}
+		.row{
+			margin-top: -50px;
+			margin-left: 10px;
+		}
+		#num1 .col{
+			position: relative;
+			top: 1em;
+		}
+		#item{
+			width: 40px;
+		}
+		#itemHead{
+			width: 40px;
+			height: 10px;
+			background-color: blue;
+		}
+		#itemBody{
+			width: 40px;
+			height: 30px;
+			background-color: red;
+		}
+		#btn{
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			margin-left: 20px;
+			display: inline-block;
+			width: 50px;
+			text-align: center;
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td id="num1"><p class="row">1</p><p class="col">1</p></td><td><p class="row">2</p></td><td><p class="row">3</p></td><td><p class="row">4</p></td><td><p class="row">5</p></td><td><p class="row">6</p></td><td><p class="row">7</p></td><td><p class="row">8</p></td><td><p class="row">9</p></td><td><p class="row">10</p></td>
+		</tr>
+		<tr>
+			<td><p class="col">2</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">3</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">4</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">5</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">6</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">7</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">8</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">9</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td><p class="col">10</p></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+	</table>
+	<div id="item" style="position: relative;top: -200px;left: 200px;">
+		<div id="itemHead"></div>
+		<div id="itemBody"></div>
+	</div>
+		<div>
+			<select name="zl" id="zl">
+				<option value="GO">GO</option>
+				<option value="TUN LEF">TUN LEF</option>
+				<option value="TUN RIG">TUN RIG</option>
+				<option value="TUN BAC">TUN BAC</option>
+			</select>
+			<button id="btn">执行</button>
+		</div>
+	<br>
+	<!-- <p>指令： TUN LEF / TUN RIG  / TUN BAC  / GO</p> -->
+	<script src="task04.js"></script>
+</body>
+</html>

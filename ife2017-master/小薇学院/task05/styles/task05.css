@@ -1,0 +1,154 @@
+*{
+	margin: 0 ;
+	padding: 0;
+}
+body{
+	background-color: rgb(222,222,222);
+	margin: 0 auto;
+}
+#top{
+	height: 70px;
+	line-height: 70px;
+	background-color: #333333;
+}
+#top img{
+	width: 180px;
+	height: 60px;
+	margin-left: 30px;
+}
+#top span{
+	float: right;
+	height: 70px;
+	line-height: 70px;
+}
+#top ul li{
+	display: inline-block;
+}
+#top a{
+	color: white;
+	margin-right: 30px;
+	text-decoration: none;
+}
+.middle{
+	background-color: white;
+	margin: 20px;
+	padding: 20px;
+	line-height: 2em;
+	border: 1px solid #ccc;
+	box-shadow: 1px 1px 0px #888888;
+}
+body h1{
+	line-height: 2em;
+}
+.author{
+	line-height: 2em;
+	color: #888888;
+}
+.sj p{
+	text-indent: 2em;
+}
+#line-pic li{
+	list-style: none;
+	text-align: center;
+	display: inline-block;
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin: 10px;
+	/*line-height: normal;*/
+}
+#line-pic img{
+	/*margin: 0;
+	padding: 0;
+	border:1px solid red;
+	line-height: normal;*/
+	vertical-align: middle;
+}
+.sj1 li{
+	list-style: none;
+	margin-left: 20px;
+}
+.middle ol li{
+	margin-left: 50px;
+}
+table{
+	border-collapse:collapse;
+	width: 100%;
+}
+table,tr,td{
+	text-indent: 0.5em;
+	/*font-weight: bold;*/
+	border: 1px solid #ccc;
+}
+table tr:nth-child(1){
+	background-color: rgb(51,51,51);
+	color: white;
+}
+table tr:nth-child(6){
+	background-color: rgb(204,204,204);
+}
+/*#middle-bottom{
+	margin-top: 50px;
+	margin-right: 5%;
+}*/
+#bar{
+	border-left: 3px solid #ccc;
+	padding-left: 5px;
+	font-weight: bold; 
+}
+#left-bar{
+	width: 35%;
+	height: 350px;
+	/*border: 1px solid red;*/
+	float: left;
+}
+#right-bar{
+	/*border: 1px solid red;*/
+	float: right;
+	width: 64%;
+	height: 350px;
+}
+#left-bar p{
+	text-align:right
+
+}
+#right-bar input,{
+	float: left;
+}
+#right-bar p{
+	font-size:10px;
+}
+.zs{
+	color: #ccc;
+	margin-bottom: 10px;
+}
+#sub{
+	width: 100%;
+	font-size: 1em;
+	height: 3em;
+	color: white;
+	background-color: rgb(51,85,208);
+	border-radius: 10px;
+	outline: 0;
+	margin-top: 10px;
+	text-align: center;
+}
+#bottom{
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+	background-color: black;
+	color: white;
+	text-align: center;
+	clear: left;
+}
+.left{
+/*	display: inline-block;
+	float: left;*/
+	margin-right: 420px;
+	/*overflow: auto;*/
+}
+#middle-bottom{
+	width: 360px;
+	float: right;
+	/*margin-left: 10px;*/
+}

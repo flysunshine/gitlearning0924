@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PPAP</title>
+	<style>
+		#tip{
+			font-size: 10px;
+			color: rgb(153,153,153);
+		}
+		div{
+			width: 200px;
+			height: 200px;
+			background:url("images/ppap.jpg");
+			background-repeat: no-repeat;
+		}
+		input{
+			display: none;
+		}
+		#pen:checked ~ .pic{
+			background-position: 0px 0px;
+		}
+		#apple:checked ~ .pic{
+			background-position: -200px 0px;
+		}
+		#apple-pen:checked ~ .pic{
+			background-position: 0px -200px;
+		}
+		#pineapple:checked ~ .pic{
+			background-position: -400px 0px;
+		}
+		#pineapple-pen:checked ~ .pic{
+			background-position: -280px -200px;
+		}
+		#ppap:checked ~ .pic{
+			width: 400px;
+			background-position: 0px -400px;
+		}
+	</style>
+</head>
+<body>
+	<input type="radio" name="radio" id="pen"/>
+	<input type="radio" name="radio" id="apple"/>
+	<input type="radio" name="radio" id="pineapple"/>
+	<input type="radio" name="radio" id="apple-pen"/>
+	<input type="radio" name="radio" id="pineapple-pen"/>
+	<input type="radio" name="radio" id="ppap"/>
+	<h1>PPAP</h1>
+	<p id="tip">点击歌词有惊喜</p>
+	<p><label for="pen">I have a pen,</label></p>
+	<p><label for="apple">I have an apple.</label></p>
+	<p><label for="apple-pen">(Uhh~)Apple-pen!</label></p>
+	<p><label for="pen">I have a pen,</label></p>
+	<p><label for="pineapple">I have pineapple.</label></p>
+	<p><label for="pineapple-pen">(Uhh~)Pineapple-pen!</label></p>
+	<p><label for="apple-pen">Apple-pen~</label></p>
+	<p><label for="pineapple-pen">Pineapple-pen~</label></p>
+	<p><label for="ppap">(Uhh\h~)Pen-Pineapple-Apple-pen!</label></p>
+	<div class="pic"></div>
+</body>
+</html>
