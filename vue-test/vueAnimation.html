@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>过渡和动画</title>
+    <script src="js/vue.js">
+    </script>
+    <script src="js/velocity.min.js"></script>
+    <script src="js/velocity.ui.min.js"></script>
+    <style type="text/css">
+        div{
+            margin: 100px;
+        }
+        .fade-enter-active{
+            transition:all 0.5s
+        }
+        .fade-leave-active{
+            transition:all 2s
+        }
+        .fade-leave-to,.fade-enter{
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /*.bounce-enter,.bounce-leave-to{*/
+            /*opacity: 0;*/
+            /*transform: translateX(20px);*/
+        /*}*/
+        .bounce-enter-active{
+            animation:bounce-in  0.5s ;
+        }
+        .bounce-leave-active{
+            animation:bounce-in  0.5s reverse;
+        }
+        @keyframes bounce-in {
+            0%{
+            transform:scale(0);
+            }
+
+            50%{
+                transform:scale(1.5);
+            }
+
+           100%{
+                transform:scale(1);
+            }
+
+        }
+        .list-item{
+            padding-right: 10px;
+        }
+        .box-drag{
+            background-color: green;
+            width: 20px;
+            height: 20px;
+            margin: 20px;
+            /*rotateX: '45deg';*/
+
+        }
+    </style>
+    <link rel="stylesheet" href="css/animate.css">
+
+</head>
+<body>
+<!--transition组件-->
+<div id="demo">
+    <button  @transitionend="test">text</button>
+    <button @click="show = !show"  v-bind:show="show" >toggle</button>
+    <transition name="fade" >
+        <p v-show="show">ppp</p>
+    </transition>
+    <button @click="hide = !hide"  v-bind:hide="hide">toggle</button>
+    <transition name="bounce" :duration="{ enter: 1500}">
+        <p v-if="!hide" style="background-color: #1F7F00">ppp</p>
+    </transition>
+    <button @click="animate = !animate"  v-bind:hide="animate">toggle</button>
+    <transition name="bounce"  enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
+        <p v-show="animate">ppp</p>
+        <!--使用Animate.css库，类名优先级高于普通类名-->
+    </transition>
+    <!--钩子函数-->
+    <!--多个元素的过渡,没有key值的话相同元素会复用，没有动画效果-->
+    <transition name="fade" mode="out-in">
+        <button v-if="isEditing" key="save" @click="isEditing=!isEditing"> Save</button>
+        <button v-else key="edit" @click="isEditing=!isEditing"> Eidt</button>
+    </transition>
+    <transition name="fade" mode="out-in">
+        <button  :key="ok" @click="ok = !ok">{{ok ? 'yes':'no'}} </button>
+    </transition>
+    <!--多个组件的过渡-->
+    <input type="radio" id="A"  name="component" v-model="view" :value="viewa"> <label for="A">A</label>
+    <input type="radio" id="B"  name="component" v-model="view" :value="viewb" > <label for="B">B</label>
+    <transition name="fade" mode="out-in">
+    <component v-bind:is="view" :te="text"></component>
+    </transition>
+    <!--列表过渡-->
+    <!--不同于 <transition>，它会以一个真实元素呈现：默认为一个 <span>。
+    你也可以通过 tag 特性更换为其他元素。内部元素 总是需要 提供唯一的 key 属性值-->
+    <button>列表过渡</button>
+    <!--transition-group必须有key值-->
+    <transition-group tag="p" name="list">
+        <span v-for="item in items" v-bind:key="item" class="list-item">{{item}}</span>
+        <span>{{item}}</span>
+    </transition-group>
+    <input type="range" v-model="duration" max="200">
+    {{duration}}
+    <ul>
+        <template v-for="item in items">
+            <li>{{ item}}</li>
+            <li class="divider">sss</li>
+        </template>
+    </ul>
+    <button @click="show =!show">如果transition没有钩子函数和CSS过渡/动画，则立即执行</button>
+    <transition>
+        <p v-show="show">gggg</p>
+    </transition>
+    <button @click="test2">测试输入框内容的类型为string</button>
+    <input type="number" v-model="number" >
+    <!--<input type="number" v-model="number">-->
+    <!--状态过渡-->
+
+</div>
+<button id="btn">Velocity动画效果</button>
+<div class="box-drag">1</div>
+<div class="box-drag">2</div>
+<div class="box-drag">3</div>
+
+
+</body>
+</html>
+<script type="application/javascript">
+ var a = {
+     template:'<span>Component A</span>'
+ };
+ var b = {
+     template:'<span>Component B</span>'
+ };
+    var app = new Vue(
+        {
+            el:'#demo',
+            data:{
+                show:true,
+                hide:false,
+                animate:true,
+                isEditing:true,
+                ok:true,
+                number:0,
+                view:'v-a',
+                viewa:'v-a',
+                viewb:'v-b',
+                currentView:a,
+                nextView:b,
+                text:'hello world',
+                rad:'',
+                items:[1,2,4,7,8,3],
+                duration:0
+            },
+            components:{
+                'v-a':{
+//                    props:['te'],字符串数组
+//                    props:{
+//                        te:{
+//                            type:Number,
+//                            required:true
+//                        }
+//                    },  对象 可以进行校验
+                    template:'<p><span>Component A </span> <slot>备胎{{te}}</slot></p>',
+                    data:function () {
+                        return {
+//                            te:data
+                        }
+                    }
+                },
+                'v-b':{
+                    template:'<p><span>Component B </span> <slot>备胎</slot></p>',
+                }
+            },
+            methods:{
+                test:function(){
+                    alert(1);
+                },
+                test2:function () {
+                    alert(typeof this.number);
+//                    Velocity(box,"transition.slideLeftBigIn", { drag: true });
+                }
+            }
+
+        }
+    )
+
+
+    </script>
+<script type="text/javascript">
+
+    window.onload = function(){
+        var box = document.getElementsByClassName("box-drag");
+        var btn = document.getElementById("btn");
+        btn.onclick = function(){
+            Velocity(box,{opacity:0,translateX:'19px'}, {duration:800,complete:function () {
+                alert('w');
+            },loop:2});
+            Velocity(box,"callout.bounce", { duration: 650 });
+//            使用了ui，直接利用自带的特效
+        }
+
+    }
+</script>
+<!--
+    1.在 <template> 元素上使用 v-if 条件渲染分组
+因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？
+此时可以把一个 <template> 元素当做不可见的包裹元素，并在上面使用 v-if。
+    2.最终的渲染结果将不包含 <template> 元素
+类似于 v-if，你也可以利用带有 v-for 的 <template> 渲染多个元素。
+-->
+<!--关于 Velocity
+1.通过jquery引用时有两个参数：$(".demo").velocity({ opacity: 0.5 },{duration:200});
+2.直接使用：Velocity（el,{ opacity: 0.5 },{duration:200}）
+参数配置如下：
+    duration: 400,         // 动画执行时间
+    easing: "swing",       // 缓动效果
+    queue: "",             // 队列
+    begin: undefined,      // 动画开始时的回调函数
+    progress: undefined,   // 动画执行中的回调函数（该函数会随着动画执行被不断触发）
+    complete: undefined,   // 动画结束时的回调函数
+    display: undefined,    // 动画结束时设置元素的 css display 属性
+    visibility: undefined, // 动画结束时设置元素的 css visibility 属性
+    loop: false,           // 循环
+    delay: false,          // 延迟
+    mobileHA: true         // 移动端硬件加速（默认开启）
+
+
+-->
+

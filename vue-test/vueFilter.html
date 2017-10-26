@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js" ></script>
+</head>
+<body>
+<div id="demo"></div>
+    {{messsage}}
+</body>
+</html>
+<script type="application/javascript">
+    var app = new Vue(
+        {
+            el:'#demo',
+            data: {
+                messsage: 'hello world'
+            },
+            filters:{
+                capitalize:function (value) {
+                    if(!value) return;
+                    value = value.toString();
+                    return value.charAt(0).toUpperCase()+value.slice(1);
+                    
+                }
+            }
+
+        }
+    )
+</script>

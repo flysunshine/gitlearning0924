@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form action=""  name="form1" id="form1">
+    <input type="text" placeholder="输入一个字母"  id="form1Text">
+    <input type="checkbox" >
+    <input type="submit" value="submit form" title="表单提交" >
+    <input type="reset" value="reset form" title="表单重置" >
+</form>
+<form action="" name="form2" id="form2">
+    <button type="submit" title="按钮"  >submit button</button>
+</form>
+<form action="" name="form3" id="form3">
+    <input type="image" src="images/mm1.jpg" width="20px" height="20px" title="图片按钮" >
+</form>
+<button id="button">点击</button>
+<!--文本框脚本-->
+<input type="text" size="10" maxlength="10" value="我是input文本框">
+<textarea name="c" id="textArea" cols="30" rows="10">我是textarea文本框</textarea>
+</body>
+</html>
+<script type="text/javascript">
+    window.onload = function () {
+        var form1 = document.getElementById("form1");
+        var form2 = document.getElementById("form2");
+        var form3 = document.getElementById("form3");
+
+
+        var button = document.getElementById("button");
+        form1.onsubmit = function () {
+            alert('submit form1');
+        }
+        var form1Text = document.getElementById("textArea");
+        button.onclick = function () {
+//            alert('ss');
+//            var form1Cont = form1.title;
+            form1Text.select(); // 选择全部文本
+
+//           选择文本框中的所有文本内容，该方法触发select事件
+//            var input = document.forms[0].title;
+//            var input1 = document.forms[1].title;
+//            var input2 = document.forms[2].title;
+//            alert(form1Cont +'  '+input);
+//            alert(form1Text);
+//            alert(input2);
+        }
+        form1Text.onselect = function () {
+            var selectPart =  form1Text.setSelectionRange(0,3);//选择部分文本
+            alert(selectPart);
+            var selcet = getSelectedText(form1Text);
+            alert(selcet);
+//
+        }
+//        取得选择的文本
+        function getSelectedText(textbox) {
+           return  textbox.value.substring(textbox.selectionStart,textbox.selectionEnd);
+
+        }
+    }
+</script>

@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery/jquery-3.2.1.js"></script>
+    <script src="vue.js"></script>
+    <style type="text/css">
+        .clsImg{
+            color: #1F7F00;
+        }
+        .divL{
+            background-color: lightgray;
+            width: 300px;
+            padding: 10px 2px;
+            border: 1px solid black;
+            float: left;
+        }
+        .divR{
+            float:right;
+            border: 1px dashed grey;
+        }
+        ul {
+            list-style: none;
+        }
+        .divR div{
+            background-color: red;
+        }
+        .divR p {
+            background-color: green;
+        }
+        .divR span{
+            background-color: gold;
+        }
+        table{
+            border: 1px solid darkgrey;
+            /*position: relative;*/
+        }
+        table tr th,td{
+            border: 1px solid #666;
+            text-align: center;
+        }
+        table tr:last-child td{
+            border: none;
+            /*width: 100%;*/
+        }
+        table tr td img{
+            cursor: pointer;
+        }
+        #imgTip{
+            position: absolute;
+            display: none;
+            width: 100px;
+            height: 100px;
+        }
+
+        .wrong{
+            background-color: grey;
+        }
+        #info{
+            display: inline-block;
+            width: 150px;
+            height: 20px;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+    ddd1
+    <span>ddd2</span>
+    <input type="text" name="ypp" value="de">
+    ddd3
+</div>
+<img src="" alt="" name="ypp">
+<img src="" alt="" name="ypp2">
+<div>
+<select name="select" id="" multiple>
+    <option value="1">item1</option>
+    <option value="2">item2</option>
+    <option value="3">item3</option>
+    <option value="4">item4</option>
+    <option value="5">item5</option>
+    <option value="6">item6</option>
+</select>
+    <p id="p1">ggg</p>
+</div>
+<div>
+    <input type="text"  id="input">
+    <p id="p2">ssss</p>
+</div>
+<p id="cssTest">jqueryTest</p>
+<div class="divL">
+    <ul id="ulList">
+    <li>
+        <span>元素名:</span>
+        <select name="" id="select2">
+            <option value="div">div</option>
+            <option value="span">span</option>
+            <option value="p">p</option>
+        </select>
+    </li>
+    <li>
+        <label for="inputText">内容為</label>
+        <input type="text" id="inputText">
+    </li>
+    <li>
+        <label for="select3">屬性名</label>
+        <select name="" id="select3">
+            <option value="title">title</option>
+            <option value="id">id</option>
+            <option value="class">class</option>
+            <option value="dir">dir</option>
+            <option value="lang">lang</option>
+        </select>
+    </li>
+    <li>
+        <label for="inputAttr" >屬性值</label>
+        <input type="text" id="inputAttr">
+    </li>
+        <button id="create">創建</button>
+    </ul>
+</div>
+<div class="divR"></div>
+<div class="clone"></div>
+<div class="replace">
+    <span id="span1">第一個span</span>
+    <span id="span2">第二個span</span>
+</div>
+<button id="part">替換部分</button>
+<button id="all">替換全部</button>
+<div class="table">
+    <table cellspacing="0" >
+        <tr>
+            <th>選項</th>
+            <th>編號</th>
+            <th>封面</th>
+            <th>購書人</th>
+            <th>性別</th>
+            <th>購書價</th>
+        </tr>
+        <tr id="0">
+            <td><input type="checkbox" id="checkBox1" value="0"></td>
+            <td>1001</td>
+            <td><img src="images/1.jpg" width="80px" height="80px" alt=""></td>
+            <td>李小萌</td>
+            <td>女</td>
+            <td>45員</td>
+        </tr>
+        <tr id="1">
+            <td><input type="checkbox" id="checkBox2" value="1"></td>
+            <td>1002</td>
+            <td><img src="images/2.jpg" width="80px" height="80px" alt=""></td>
+            <td>周小星</td>
+            <td>女</td>
+            <td>20員</td>
+        </tr>
+        <tr id="2">
+            <td><input type="checkbox" id="checkBox3" value="2"></td>
+            <td>1003</td>
+            <td><img src="images/1.jpg" width="80px" height="80px" alt=""></td>
+            <td>李大仁</td>
+            <td>男</td>
+            <td>80員</td>
+        </tr>
+        <tr>
+            <td style="text-align: left" colspan="6">
+                <span>
+                <label for="allBox"></label>
+                <input type="checkbox" id="allBox">
+                <button id="delete">刪除</button>
+                    </span>
+            </td>
+
+        </tr>
+        <img id="imgTip" alt="" src="images/1.jpg">
+    </table>
+</div>
+<div class="propagation">
+    <button id="propagationBtn">冒泡按鈕</button>
+</div>
+<div class="cssTest">
+    <label for="inputCss">郵箱：</label>
+    <input type="text" id="inputCss">
+    <span id="info"></span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        $('select').change(function () {
+            var strSel = $('select').val().join(',');
+            $('#p1').html(strSel);
+        });
+        $('#input').change(function(){
+                var strInput = $('#input').val();
+//                alert(strInput);
+                $("#p2").html(strInput);
+            }
+        );
+        $('#input').focus(function(){
+            $('#input').val('');
+            }
+        );
+        $('#cssTest').click(
+            function () {
+                $(this).css('font-size',"30px");
+//                $(this).addClass('clsImg');
+                $(this).toggleClass('clsImg');
+            }
+        )
+    })
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        $('#create').click(
+            function () {
+                var str1 = $('#select2').val();
+                var str2 = $('#inputText').val();
+                var str3 = $('#select3').val();
+                var str4 = $('#inputAttr').val();
+                var $div =$("<"+str1+" "+str3 +"='"+str4+"'>"+str2+"</"+str1+">");
+//                $('.divR').append($div);
+//                $div.appendTo($('.divR'));
+//                $('.divR').prepend($div);
+                $div.prependTo($('.divR'));
+                var $clone = $('.divL').clone(true);
+                $('.clone').append($clone)
+
+
+            }
+        );
+        $('#part').click(
+            function () {
+                $('#span1').replaceWith('<span>我是替換第一個span的内容</span>');
+            }
+        );
+        $('#all').click(
+            function () {
+                $('<span>我是替換全部的内容</span>').replaceAll($('.replace'))
+            }
+        );
+        $('table tr:even').css('background-color','grey');
+        $('#allBox').click(
+            function () {
+                if(this.checked){
+                    $('table tr td input[type=checkbox]').attr('checked',true);
+                }
+                else{
+                    $('table tr td input[type=checkbox]').attr('checked',false);
+                }
+            }
+        )
+        $('#delete').click(function () {
+                var cheLists = $('table tr td input:checked:not("#allBox")');
+                var len = $('table tr td input:checked:not("#allBox")').length;
+//            alert(len);
+                if(len!=0){
+                    cheLists.each(
+                        function (index) {
+//                            alert($(this).val());
+//                            alert(this.value);
+//                        if(this.checked) {
+//                            alert('clicked');
+                                $("table tr[id = "+$(this).val()+"]").remove();
+//                        }
+                        }
+                    )
+                }
+        })
+        $('table tr td img').mousemove(
+           function (e) {
+            $('#imgTip').attr('src',this.src).css({
+                'top':(e.pageY+15)+'px',
+                'left':(e.pageX+5)+'px'
+            }).show(300);
+
+           }
+        );
+        $('table tr td img').mouseout(
+            function (e) {
+                $('#imgTip').hide();
+            }
+        )
+        $('#propagationBtn').click(
+            function () {
+
+              alert('btnclick')
+            }
+        );
+        $('.propagation').click(
+            function () {
+
+                alert('divclick')
+            }
+        );
+        $('#inputCss').trigger('focus');
+        $('#inputCss').focus(function () {
+//            alert('focus');
+            $('.cssTest').removeClass('wrong');
+            $('#info').text('輸入您常用的郵箱！');
+        });
+        var str = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        $('#inputCss').blur(
+            function () {
+                if(this.value == ''||!str.test(this.value))
+                {
+                    $('#info').text('請輸入有效的郵箱');
+                    $('.cssTest').addClass('wrong');
+                }
+                else{
+                    $('#info').css('background-image','url(images/1.jpg)');
+                    $('#info').text('');
+                    $('.cssTest').removeClass('wrong');
+                }
+//                alert(this.value);x
+            }
+        );
+        var date = new Date(2017,10,11);
+        var json = JSON.stringify(date);
+        var js = JSON.parse(json);
+//        var jss = js.getFullYear();
+        alert(json+'  ');
+        var obj = {one:1,two:2};
+        $.each(obj,function (key,val) {
+            alert(key);
+            alert(val);
+        })
+
+//        $('table tr').each(
+//            function () {
+//                $(this).click(
+//                    function () {
+//                        $('table tr[id = "0"]').remove();
+//                      alert('click');
+//                    }
+//                )
+//            }
+//        )
+
+    })
+</script>

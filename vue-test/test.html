@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <style type="text/css">
+        .replace2{
+            color: #1F7F00;
+        }
+        .replace3{
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        var jsvascript = 'jsObject';
+        </script>
+</head>
+<body>
+<p>列表示例：</p>
+<div class="h5Test yepp1 yepp2 yepp3" data-myname="yepp"  message="panpan">h5test</div>
+<div title="diyige" id="replace"  class="replace2" style="color:red;'font-size':20px" onclick="alert('success')"><p><span>1</span> <em>dddd</em>段落1</p></div>
+<ul id="myList"> <li>Coff<em>ee</em></li><li>Tea</li><!--zhushi-->绅士</ul>
+
+
+<p id="demo" >请点击按钮来获得列表最后一个子节点的节点名。</p>
+
+<button id="test" >试一下</button>
+<input type="checkbox" name="choss" id="choice1" checked="checked"> <label for="choice1">牛奶</label>
+<input type="checkbox" name="choss" id="choice2"> <label for="choice1">咖啡</label>
+<input type="text" id="choice3"> <label for="choice3">文本</label>
+<!--自定义组件-->
+<div id="component">
+    <my-com message="hello world" >我是父组件内容</my-com>
+    <!--{{tests}}-->
+    <button @click="test()"></button>
+<!--作用域插槽-->
+    <my-scope>
+        <!--<h1>sed</h1>-->
+        <template slot-scope="pro">
+            ddd
+            <span>{{pro.text}}ssss</span>
+            <span>{{pro.contents }}</span>
+        </template>
+    </my-scope>
+    <my-default>
+        <span>父组件内容1</span>
+    </my-default>
+    <my-render></my-render>
+    <my-testsync  :foo.sync="bar">
+    </my-testsync>
+    {{bar}}
+
+    <my-component ></my-component>
+</div>
+<!--this.$slots.default-->
+
+
+
+
+
+<p><b>注释：</b>元素中的空白被视作文本，而文本被视作文本节点。</p>
+
+<p>请尝试在 UL 关闭标签之前添加空格，结果将是节点 name=#text。</p>
+<div class="styleTest">
+    <button id="btnTest">测试style属性</button>
+    <div id="styleContent" style="background-color: #1F7F00;font-size: 20px">styleTest</div>
+</div>
+</body>
+</html>
+<script type="application/javascript">
+    Vue.component('my-render',{
+//        props:[],
+        template:'<div>我是 <slot>备胎</slot></div>',
+        render:function(createElement){
+            return createElement('p',['hayi',createElement('span','hayi2')]);
+        },
+//        render:function(createElement){
+//            return createElement((function () {
+//                return 'p';
+//            })(),['hayi',createElement('span','hayi2')]);
+//        },
+        methods:{
+            createP:function () {
+                return 'p';
+            }
+        }
+
+    })
+    Vue.component('my-com',{
+        props:['message'],
+        template:'<div>自定义组件{{message}}</div>'
+    })
+    Vue.component('my-testsync',{
+        props:['foo'],
+//        template:'<input type="text" @input="this.$emit(\'update:foo\', $event.target.value)">',
+        template:' <div><p>{{foo}}</p> ' +
+        '<input type="text" v-model="foo" @input="teste($event.target.value)">'+
+            '</div>'
+        ,
+        data:function () {
+            return {
+                sync:''
+            }
+
+        },
+        methods:{
+            teste:function (event) {
+//                alert('dd');
+                this.$emit('update:foo', event);
+//                alert(event);
+            }
+        }
+//        template:'<div> sync</div>'
+
+    })
+    Vue.component('my-component', {
+        template: '<div>A custom component!</div>'
+
+        }
+    )
+    Vue.component('my-scope',{
+//        props:['message'],
+        template:'<div>自定义组件<slot text="hello" contents="world"></slot>' +
+            '<slot></slot>'+
+        '</div>'
+    })
+    var vm = new Vue(
+        {
+            el:'#component',
+            data:{
+               message:'',
+                bar:'nagesync'
+            },
+            computed:{
+                tests:function () {
+                    return this.message;
+
+                }
+            },
+            methods:{
+                test:function(){
+                    alert('22');
+                    alert(this.$slots.default);
+                }
+            },
+            components:{
+                'my-default' :{
+                    template:'<div @click=\'child()\'>我是 <slot>备胎</slot></div>',
+                    methods:{
+                        child:function(){
+                            alert(this.$slots.default);
+                        }
+                    }
+
+                }
+            }
+
+        }
+    )
+</script>
+
+<script>
+    var jsvascript = 'jsObject';
+    window.onload = function() {
+//
+         var styleButton =  document.getElementById("btnTest");
+         var styleContent = document.getElementById("styleContent");
+
+         var  sheet = document.styleSheets[0];
+         var rules = sheet.cssRules||sheet.rules;
+         var rule0 = rules[0];
+        var rule1 = rules[1];
+
+        styleButton.onclick = function () {
+//            alert(styleContent.style);
+////            得到对象，getAttribute()得到的是内容，字符串
+//            alert(styleContent.style.cssText);
+//            alert(styleContent.style[0]);
+//            alert(typeof styleContent.id);
+            alert(rule0.cssText+'  rule1: '+rule1.cssText);
+            alert(rule0.style.color);
+            alert(sheet.type);
+
+
+
+        }
+
+
+
+
+
+        var l = document.getElementById("myList");
+        var h5Test = document.getElementsByClassName("h5Test")[0];
+        h5Test.classList.add(jsvascript);
+        alert(h5Test.dataset.myname);
+        alert(h5Test.className);
+        alert(h5Test.getAttribute('message'));
+//        h5Test.innerHTML = 'hello & welcom,<b>\"render\"</b>';
+//        h5Test.insertAdjacentHTML('beforeend','<p>hhhahahaha</p>') ;
+        h5Test.insertAdjacentHTML('beforebegin','<p>hhhahahaha</p>') ;
+
+        var name = h5Test.getAttribute('data-myname');
+//        h5Test.innerHTML = '<style type="text/css"> body {background-color: #1F7F00;}</style>';
+        alert(name+'haha');
+        alert(h5Test.classList.item(2))
+//        alert(typeof l);
+//        html5新增接口
+//        document  新增属性
+//        alert(document.charset);
+//        alert(document.readyState);  complete;loading
+//        alert(document.head);
+//        兼容模式 document.compatMode ; CSS1Compat; BackCompat;标准模式；混杂模式
+//        焦点管理
+//        document.activeElement;    document.hasFocus();
+        console.log('sss');
+        var li = document.getElementsByTagName("li")[0];
+        var div = document.getElementById('replace');
+        var button= document.getElementById("test");
+        var theNode = document.createTextNode('woni');
+        var thePNode = document.createElement('p');
+        var script = document.getElementsByTagName('script')[0];
+        thePNode.innerText = '我是新增的p';
+        div.className +=' replace3';
+        button.onclick = function () {
+            alert(div.style);
+            alert(div.getAttribute('style'));
+            alert(div.onclick);
+            alert(div.getAttribute('onclick'));
+            alert(l.firstChild.nodeName);
+//            div.className -=' replace3';
+            alert('url:  '+document.URL+'    domain: '+document.domain+'    referrer:  '+document.referrer);
+            alert(div.className);
+           div.replaceChild(thePNode,div.firstChild);
+//            div.appendChild(theNode);
+            alert(div.firstChild.childNodes[0].nodeName);
+//            var len = l.childNodes.length;
+            var len = l.children.length;
+            alert(len);
+            for(var i = 0;i<1;i++){
+                alert(l.childNodes[0].nodeName);
+            }
+        }
+//        var x = document.getElementById("demo");
+//        var btn = document.getElementsByTagName("button")[0];
+////        x.innerHTML+=l.lastElementChild.nodeName;
+////        x.innerHTML+=l.firstChild.nodeName;
+//        var input = document.getElementById("choice3");
+//        input.oninput = function () {
+//            var input = document.getElementById("choice3").value;
+//            x.innerText = input;
+//        }
+////        input.onfocus = function () {
+////            alert("focus");
+////        }
+//        input.onblur = function () {
+//            alert("focus");
+//        }
+//        btn.onclick = function(){
+////        function myFunction()
+////        {
+//        var input = document.getElementById("choice3").value;
+//        x.innerText = input;
+////        alert(input);
+//    }
+        }
+</script>
+<script>
+//    window.onload = function () {
+        alert(jsvascript+'sectipt2');
+//    }
+</script>

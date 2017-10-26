@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义指令</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+
+<div id="demo" v-demo:foo="1+1">
+
+</div>
+<div id="demo2">
+<!--<div id="demo2" v-demo2:foo.a="{color:'red',age:12}"></div>-->
+<input type="text" v-focus>
+</div>
+<!--<div>-->
+<!--<input type="text" v-focus>-->
+<!--</div>-->
+<!--渲染函数-->
+<anchored-heading :level="2">hello world</anchored-heading>
+<blog-post>
+    <h1 slot="header">
+        About Me
+    </h1>
+    <p>Here's some page content, which will be included in vm.$slots.default, because it's not inside a named slot.</p>
+    <p slot="footer">
+        Copyright 2016 Evan You
+    </p>
+    <p>If I have some content down here, it will also be included in vm.$slots.default.</p>.
+</blog-post>
+</body>
+</html>
+<script type="application/javascript">
+    Vue.component('blog-post', {
+        render: function (createElement) {
+//         $slots.header:访问被插槽分发的内容
+            var header = this.$slots.header;
+            var body   = this.$slots.default;
+            var footer = this.$slots.footer;
+            return createElement('div', [
+                createElement('header', header),
+                createElement('main', body),
+                createElement('footer', footer)
+            ])
+        }
+    })
+    Vue.component (
+        'anchored-heading',{
+            render:function (creatElement) {
+             return  creatElement('h'+this.level,this.$slots.default )
+            },
+            props:{
+                type:Number,
+                required:true
+            }
+        },
+
+    )
+
+    Vue.directive('focus',
+        {
+            inserted:function (el) {
+//                el.innerHTML = 'name';
+//                alert("bind");
+                el.focus();
+            }
+        }
+
+    )
+    var app = new Vue({
+        el:"#demo",
+        directives:{
+            'demo':{
+                bind:function(el,binding,vnode){
+                    var s = JSON.stringify;
+                    el.innerHTML =
+                        'name:'+s(binding.name)+'</br>'+
+                        'value'+s(binding.value)+'</br>'+
+                         'expression'+s(binding.expression)+'</br>'+
+                            'binding:'+binding
+                }
+            },
+            'focus': {
+                inserted:function (el) {
+                    el.focus();
+
+                }
+
+            }
+        }
+
+
+    })
+    var app = new Vue({
+        el: "#demo2",
+        directives:{
+            'focus':{
+                inserted:function (el) {
+                    el.focus();
+                },
+                update:function (el,binding) {
+                    alert(binding.value);
+
+                }
+
+            }
+        }
+        }
+    )
+//    var app2 = new Vue({
+//        el:"#demo2",
+//        directives:{
+//            'demo':{
+//                bind:function(el,binding,vnode){
+//                    var s = JSON.stringify;
+//                    el.innerHTML =
+//                        'name:'+s(binding.name)+'</br>'+
+//                        'value'+s(binding.value)+'</br>'+
+//                        'expression'+s(binding.expression)+'</br>'+
+//                        'binding:'+s(binding)+'</br>'+
+//                        'binding:'+binding
+//// binding:{"name":"demo","rawName":"v-demo:foo.a","value":{"color":"red","age":12},
+//// "expression":"{color:'red',age:12}","arg":"foo","modifiers":{"a":true},"def":{}}
+//
+//                }
+//            }
+//        }
+//
+//
+//    })
+
+
+
+</script>

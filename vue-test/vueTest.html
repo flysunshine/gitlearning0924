@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js">
+    </script>
+    <style type="text/css">
+        .red{
+            color:red;
+        }
+        .blue{
+            color:blue;
+        }
+        .fontSize{
+            font-size: 30px;
+            font-weight: 100;
+            /*text-decoration: solid;*/
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div id="app">
+    {{ message }}
+</div>
+<div id="tit" v-bind:title="title">
+    {{ title }}    {{messageComputed}}
+
+    <!--绑定类名class-->
+    <div v-html="html" :class="color">ss1</div><!--直接-->
+    <div v-html="html" :class="{red:isActive}">ss2</div><!--对象语法，类名red存在与否与数据属性isActive是否为truthy有关-->
+    <div v-html="html" :class="{blue:isNotActive}">ss3</div>
+    <div v-html="html" :class="classObject">ss4</div><!--对象语法-->
+    <div v-html="html" :class="[color,fontSize]">ss5</div> <!--数组语法-->
+    <div v-html="html" :class="isActive ? color :fontSize">ss6</div><!--三元表达式-->
+    <!--绑定样式style-->
+   <div  :style="{color:'green',fontSize:'200px'}">ss7</div>
+    <!--<div  :style="{color:'green','font-size':'200px'}">ss</div>直接写在里面，注意如果有短横线分割应该用单引号括起来-->
+    <div  :style="styleObject">ss8</div> <!--对象语法-->
+    <div  :style="[styleObject,styleObject2]">ss9</div>  <!--数组语法:将多个样式对象应用到同一个元素-->
+    <!--条件渲染-->
+    <!--条件渲染--->
+    <h1 v-if="ok">你看见我了</h1>
+    <h1 v-if="!ok">你看见我了</h1>
+    <p v-else> 你又看见我了</p>
+    <template v-if="ok"><!--切换多个元素-->
+        <h1>Title</h1>
+        <p>p1</p>
+        <p>p2</p>
+    </template>
+    <!--登录方式切换，由于Vue高效的渲染机制，它会复用已有元素，不会从头渲染，两个模板使用同一个元素，input不会被替换-->
+    <!--利用给元素添加具有唯一值的key属性来表达“这两个元素是完全独立的，请不要复用它们”,key管理可复用元素-->
+    <template v-if="loginType === 'email'">
+        <label for="email">邮箱</label>
+        <input type="text" id="email" placeholder="请输入邮箱名">
+    </template>
+    <template v-else-if="loginType === 'username'">
+        <label for="username">用户名</label>
+        <input type="text" id="username" placeholder="请输入用户名">
+    </template>
+    <input type="button"  v-on:click="typeSwitch" value="切换种类">
+    <template v-if="loginType === 'email'">
+        <label for="email">邮箱</label>
+        <input type="text" id="email1" placeholder="请输入邮箱名" key="email-input">
+    </template>
+    <template v-else-if="loginType === 'username'">
+        <label for="username">用户名</label>
+        <input type="text" id="username1" placeholder="请输入用户名" key="username-input" >
+    </template>
+    <input type="button"  v-on:click="typeSwitch" value="切换种类">
+    <!---条件渲染-v-show-->
+    <!--v-show不支持template和v-else语法-->
+    <h1 v-show="ok">Hello!</h1>
+    <!--列表渲染-->
+    <!--把一个数组对应成一组元素，根据数组的选项列表进行渲染-数组—v-for-->
+    <ul>
+        <li v-for="item in items" :key="item.id">
+            {{item.message}}
+        </li>
+    </ul>
+    <ul>
+        <li v-for="(item,index) in items">
+        {{index}}: {{item.message}}
+            <!--{{item.message}}-->
+        </li>
+    </ul>
+    <div v-for="item of items">
+        {{item}}
+    </div>
+    <!--把一个对象的value值对应成一组元素，根据对象的value进行渲染-对象—v-for-->
+    <ul>
+        <li v-for="value in styleObject2">
+            {{value}}
+        </li>
+    </ul>
+    <ul>
+        <li v-for="(value,key) in styleObject2">
+           {{key}}:    {{value}}
+        </li>
+    </ul>
+    <ul>
+        <li v-for="(value,key,index) in styleObject2" >
+            {{index}} -{{key}}- {{value}}
+        </li>
+    </ul>
+    <!--显示过滤排序数组，利用计算属性实现-->
+    <ul>
+        <li v-for="item in evenNumbers">
+            {{item}}
+        </li>
+    </ul>
+    <!--一段取值-->
+    <span v-for="num in 10">
+        {{num}}
+    </span>
+    <!--利用v-for与template渲染多个元素-->
+    <ul>
+        <template v-for="item in items">
+            <li>{{ item.message }}</li>
+            <li class="red">ddd</li>
+        </template>
+    </ul>
+    <!--当它们处于同一节点，v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中。
+    当你想为仅有的一些项渲染节点时，这种优先级的机制会十分有用-->
+    <div>
+        <input type="text" placeholder="add more" v-model="nextTodoText" v-on:keyup.enter="addTodos">
+        <ul>
+            <li v-for="(item,index) in todos" is="todo-item" :title="item.title" messages="hello nihao" :key="item.id" @remove="todos.splice(index,1)">
+                <!--{{item.id}}&#45;&#45; {{item.title}}-->
+            </li>
+
+        </ul>
+    </div>
+    <!--事件处理-->
+    <!--监听鼠标事件-->
+    <!--有时也需要在内联语句处理器中访问原生 DOM 事件。可以用特殊变量 $event 把它传入方法-->
+    <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+        Submit
+    </button>
+    <!--事件修饰符-->
+    <!--
+    .stop：防止事件冒泡
+    .prevent：防止默认事件
+    .capture：添加事件侦听器时使用事件捕获模式
+    .self：在元素本身（比如不是子元素）触发时触发回调函数
+    .once：事件至少触发一次
+    -->
+    <!--监听键盘事件-->
+    <input type="text" v-on:keyup.enter="test">
+    <!--按键别名
+    .enter .tab .delete (捕获“删除”和“退格”键)  .esc.space.up.down.left.right
+    -->
+    <input @keyup.alt.67="test">
+    <div @click.ctrl="test">Do something</div>
+    <!--系统修饰符
+    .ctrl.alt.shift.meta
+    .exact 修饰符应与其他系统修饰符组合使用，以指示处理程序只在精确匹配该按键组合时触发。
+      <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+    <!--<button @click.ctrl="onClick">A</button>-->
+    <!-- 只有在 Ctrl 被按下的时候触发 -->
+    <!--<button @click.ctrl.exact="onCtrlClick">A</button>-->
+
+    <!--<div @click.right.prevent="test()">test</div>-->
+    <div @click="test()">test</div>
+    <!--表单输入绑定-->
+    语法糖
+    <input type="text"   v-bind:value="something1"  v-on:input="something1=$event.target.value">
+    <!--<input type="text"   value="sbd">-->
+    {{something1}}
+    <input type="text"   v-model="something2" >
+    {{something2}}
+    <input type="checkbox"  name="checkbox1"  v-model="something3" value="Jack">
+    {{something3}}
+    <input type="checkbox"  name="checkbox2"  v-model="something" value="Jack">
+    <input type="checkbox"  name="checkbox2"  v-model="something" value="Rose">
+    <input type="checkbox"  name="checkbox2"  v-model="something" value="Anna">
+    {{something}}
+    <input type="radio" name="pick" id="one" v-model="something4" value="Mandy"> <label for="one">one</label>
+    <input type="radio" name="pick"  id="two" v-model="something4" value="Jeni"> <label for="two">two</label>
+    Picked：{{something4}}
+    <select name="" id="" v-model="selected">
+        <option  disabled value="" >请选择</option>
+        <option value="A">a</option>
+        <option value="B">b</option>
+        <option value="C">c</option>
+    </select>
+    {{selected}}
+    <select name="" multiple  v-model="selected2">
+        <option  disabled value="" >请选择</option>
+        <option value="A">a</option>
+        <option value="B">b</option>
+        <option value="C">c</option>
+    </select>
+    {{selected2}}
+    <select name="" v-model="selected3">
+        <option value="" v-for="option in options" v-bind:value="option.value">
+          {{option.text}}
+        </option>
+    </select>
+    {{selected3}}
+    <!--动态绑定值-->
+    <input type="checkbox" v-model="check" v-bind:true-value="color" v-bind:false-value="message">
+    {{check}}
+    <!--修饰符：.lazy,.trim，.number-->
+    <input v-model.lazy="age" type="number">
+    {{age}}
+    <!--组件-->
+    <!--注意确保在初始化根实例之前注册组件：-->
+    <!--当使用 DOM 作为模板时 (例如，使用 el 选项来把 Vue 实例挂载到一个已有内容的元素上)，
+    你会受到 HTML 本身的一些限制，因为 Vue 只有在浏览器解析、规范化模板之后才能获取其内容。
+    -->
+    <table>
+        <tr is="my-row"></tr>
+    </table>
+    <my-child v-bind="styleObject"></my-child>
+    <my-child v-bind:color="styleObject.color"></my-child>
+
+</div>
+<div id="componentTest">
+    {{count}}
+    <add-number v-bind:count="count" v-on:increment="count++"></add-number>
+    <add-number v-bind:count="count" v-on:increment="count++"></add-number>
+    <my-checkbox v-model="foo" value="some value"></my-checkbox>
+    {{foo}}
+    <div id="demo">
+        <currency-input v-model="price" > </currency-input>
+            <span>{{price}}</span>
+    </div>
+    <input type="checkbox" :checked="status" @change="status = $event.target.checked" />
+    {{status}}
+    <input type="checkbox" checked="false">
+    <!--自定义组件v-model-->
+    <!--插槽大军来也-->
+    <!--1.单个不具有任何属性的插槽-->
+    <!--当子组件模板只有一个没有属性的插槽时，父组件传入的整个内容片段将插入到插槽所在的 DOM 位置，并替换掉插槽标签本身。
+          最初在 <slot> 标签中的任何内容都被视为备用内容。
+           备用内容在子组件的作用域内编译，并且只有在宿主元素为空，且没有要插入的内容时才显示备用内容。-->
+    <my-slot>
+        <p>我是标题</p>
+    </my-slot>
+    <my-slot>
+    </my-slot>
+    <!--2.具名插槽-->
+    <!--<slot> 元素可以用一个特殊的特性 name 来进一步配置如何分发内容-->
+    <my-layout>
+        <p slot="header">我是第一段</p>
+        <p>内容</p>
+        <p slot="footer"> 是底部</p>
+        <p>内容2</p>
+    </my-layout>
+    <!--3.作用域插槽-->
+    <!--子组件将数据传递到插槽,父组件必须有一个template作为接收子组件内容的模板-->
+    <!--在 2.5.0+，slot-scope 能被用在任意元素或组件中而不再局限于 <template>。-->
+    <my-parent>
+        <template slot-scope="pan">
+            <span>hello from parent</span>
+            <span>hello from {{pan.text}}</span>
+        </template>
+    </my-parent>
+    <my-awesome-list :items="items">
+        <!-- 作用域插槽也可以是具名的 -->
+        <li
+                slot="item"
+                slot-scope="props"
+                class="my-fancy-item">
+            {{ props.text }}
+        </li>
+    </my-awesome-list>
+    <my-test>ssss</my-test>
+
+</div>
+
+</body>
+</html>
+<script type="application/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
+    Vue.component('my-test',{
+        template:'<div>我是父组件没有内容的测试</div>'
+    })
+    Vue.component('my-awesome-list',{
+        template:'<ul> <slot name="item" v-for="item in items" :text="item.text"> ssss</slot> </ul>'
+    })
+    Vue.component("my-parent",
+        {
+            template: '<div> 2222<slot text="woaiqianduan">备胎</slot></div>>'
+//            template:'<div> <slot name="item" v-for="item in items" :text="item.text"> </slot> </div>'
+        }
+    )
+    Vue.component(
+        "my-layout",{
+            template:'<div class="contanier">' +
+                '<header> <slot name="header">头部备胎</slot> </header>'+
+                '<slot>中间内容备胎</slot>'+'<footer> <slot name="footer">底部备胎</slot> </footer>'+
+            '</div>'
+        }
+    )
+    Vue.component('my-slot',{
+        template:'<div> <p>我是第一段</p> <slot>我是备胎</slot> <p>我是第二段  </div>>'
+    })
+    Vue.component('currency-input', {
+        template: ' <span><input ref="input"  :value="value" @input="$emit(\'input\',$event.target.value)" @keyup.enter="test"></span>>',
+        props: ['value'],// 为什么这里要用 value 属性，value在哪里定义的？貌似没找到啊？
+        methods: {
+           test: function(){
+                alert('suceess');
+            }
+        }
+})
+    Vue.component('my-checkbox', {
+        model: {
+            prop: 'checked',
+            event: 'change'
+        },
+        props: {
+            checked: Boolean,
+            // 这样就允许拿 `value` 这个 prop 做其它事了
+            value: String
+        },
+        template: "<input type='checkbox'>"
+
+        // ...
+    })
+    Vue.component(
+        "todo-item",{
+            props:['title','index','message'],
+            template:"<li>{{title}}<button v-on:click='$emit(\"remove\")'>X</button>{{message}}</li>"
+//            template:"<li>{{title}}<button v-on:click='alert(\"dd\")'>X</button></li>"
+        }
+    )
+    Vue.component(
+        "my-row",{
+//            props:['title','index'],
+            template:"<tr><td>2</td></tr>"
+//            template:"<li>{{title}}<button v-on:click='alert(\"dd\")'>X</button></li>"
+        }
+    )
+    Vue.component(
+        "my-child",{
+          props:['color'],
+            template:"<div>{{color}}</div>"
+//            template:"<li>{{title}}<button v-on:click='alert(\"dd\")'>X</button></li>"
+        }
+    )
+    var app2 = new Vue({
+        el: '#tit',
+        data: {
+            price:100,
+            checked:'cheked',
+//            title: Date.now().toString(),
+            html:"<em>22</em>",
+            message:"hello world",
+            color:"red",
+            fontSize:"fontSize",
+            isActive:true,
+            isNotActive:true,
+            classObject:{
+                red:true,
+                fontSize:true
+            },
+            styleObject:{
+                color:"gray",
+                'font-size':'20px'
+            },
+            styleObject2:{
+                'text-decoration':'underline',
+                transform:'translateX(10px)',
+                display:'flex'
+            },
+            ok:true,
+            loginType:'email',
+            items:[
+                {message:'foo'},
+                {message:'bar'}
+//                {age:20},
+//                {hobby:"football"}
+            ],
+            numbers:[1,2,3,4,5,6,7,8,9],
+            nextTodoText:'',
+            todos:[
+                {id:1,
+                    title:'do the dishes'
+                },
+                {
+                    id:2,
+                    title:'take out the trash'
+                },
+                {
+                    id:3,
+                    title:'mow the lawn'
+                }
+            ],
+            nextTodoId:4,
+            something1:'',
+            something2:'',
+            something3:'',
+            something:[],
+            something4:'',
+            selected:'',
+            selected2:[],
+            options:[
+                {text:'one',value:'A'},
+                {text:'two',value:'B'},
+                {text:'three',value:'C'}
+            ],
+            selected3:'',
+            check:'',
+            age:1
+
+        },
+        computed:{
+            messageComputed:function () {
+                return this.message.split("").reverse().join("");
+            },
+            evenNumbers:function () {
+               return  this.numbers.filter(function (item,index,array) {
+                    return item%2==0;
+                })
+            }
+        },
+        methods:{
+        typeSwitch:function () {
+             this.loginType === 'email'?this.loginType = 'username':this.loginType = 'email';
+        },
+            addTodos:function () {
+//            alert(this.nextTodoText);
+//                alert('sa');
+                this.todos.push({id:this.nextTodoId,title:this.nextTodoText})
+                this.nextTodoId++;
+            },
+          warn:function (message,event) {
+//            alert(event.eventPhase);
+//              alert(event.currentTarget);
+//              alert(event.target);
+//              alert(event.clientX);
+//              alert(event.clientY);
+          },
+            test:function (event) {
+//            event.preventDefault();
+//            alert(event.eventPhase);
+                alert("test sucess");
+                alert(this.messages);
+            }
+        }
+    })
+    Vue.component(
+        'add-number',{
+           // props:['count'],
+            template:"<button v-on:click='incrementFunction'>{{counter}}</button>",
+            data:function(){
+                return {
+                    counter:0
+                }
+            },
+            methods:{
+                incrementFunction:function () {
+                    this.$emit('increment');
+                    this.counter += 1;
+                }
+            }
+        }
+    )
+    var app3 = new Vue(
+        {
+            el:"#componentTest",
+            data:{
+                count:0,
+                price:100,
+                status:'checked',
+                items:[
+                    {text:'i'},
+                    {text:'you'},
+                    {text:'she'}
+                ]
+
+            }
+        }
+    )
+
+</script>
+<script>
+    window.onload = function () {
+        var obj = ['s','f','d'];
+        for(keys of obj){
+//            alert(keys);
+        }
+    }
+</script>
+ <!--
+ computed—计算属性：我们将计算属性提供的函数用作属性的getter函数。计算属性基于它们的依赖进行缓存，
+                    计算属性只有在依赖发生时才重新求值，只要依赖没有变化。
+                    多次访问这个计算属性都会立即返回之前的计算结果，不会再次执行函数。可以提供set。
+  watch—侦听属性：观察和响应Vue实例上的数据变动
+  watch—侦听器:属性发生变化时，调用这个函数
+  data—数据属性：
+ methods—方法：每当触发重新渲染时，调用方法都会再次执行函数。
+v-if vs v-show
+    v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+    v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+    相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+    一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。
+    因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
+
+渲染，回流，重绘：http://blog.csdn.net/cxl444905143/article/details/42005333
+    数组：
+    1.变异方法：改变原始数组
+   push();pop();unshift();shift();splice();reverse();sort()
+    2.非变异方法：不改变原始数组
+    concat();slice();join();filter
+   由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
+    当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+    当你修改数组的长度时，例如：vm.items.length = newLength
+    对象：
+    还是由于 JavaScript 的限制，Vue 不能检测对象属性的添加或删除：
+    对于已经创建的实例，Vue 不能动态添加根级别的响应式属性。
+    但是，可以使用 Vue.set(object, key, value) 方法向嵌套对象添加响应式属性或者使用Object.assign()。
+
+    父组件模板的内容在父组件作用域内编译；子组件模板的内容在子组件作用域内编译。
+ -->
